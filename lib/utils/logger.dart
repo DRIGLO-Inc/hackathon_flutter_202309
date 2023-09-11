@@ -18,7 +18,6 @@ class Logger {
     logger_lib.Logger(
       printer: logger_lib.PrettyPrinter(
         colors: false,
-        stackTraceBeginIndex: 0,
         lineLength: 80,
       ),
     ),
@@ -39,7 +38,7 @@ class Logger {
     _logger.i(message);
   }
 
-  void error(Object? message, [dynamic stackTrace]) {
+  void error(Object? message, [StackTrace? stackTrace]) {
     _logger.e(message, stackTrace: stackTrace);
   }
 

@@ -10,8 +10,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # Architecture
+  flutter_riverpod: ^2.4.0
+
   # UI
   cupertino_icons: ^1.0.2
+  extended_nested_scroll_view: ^6.1.1
+  extended_image: ^8.0.2
+  pull_to_refresh_flutter3: ^2.0.1
+  adaptive_dialog: ^1.9.0+2
+
+  # Validator
+  form_validator: ^2.1.1
 
   # Logger
   logger: ^2.0.2
@@ -21,10 +31,8 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  pedantic_mono: ^1.24.0+1
 
-# The following section is specific to Flutter packages.
 flutter:
 
   # The following line ensures that the Material Icons font is
