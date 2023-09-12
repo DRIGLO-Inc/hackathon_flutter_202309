@@ -13,6 +13,9 @@ dependencies:
   # Architecture
   flutter_riverpod: ^2.4.0
 
+  # Supabse
+  supabase_flutter: ^1.10.16
+
   # UI
   cupertino_icons: ^1.0.2
   extended_nested_scroll_view: ^6.1.1
