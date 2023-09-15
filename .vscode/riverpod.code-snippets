@@ -1,0 +1,35 @@
+{
+  "ref.listen": {
+    "scope": "dart",
+    "prefix": "reflisten",
+    "description": "Create a ref.listen",
+    "body": [
+      "ref.listen<$1>(",
+      "  $2,",
+      "  ((previous, next) {",
+      "    $3",
+      "  }),",
+      ");"
+    ]
+  },
+  "Snippets: Singleton provider": {
+    "scope": "dart",
+    "prefix": ["singleton", "provider"],
+    "description": "Create a singleton Provider",
+    "body": [
+      "import 'package:flutter_riverpod/flutter_riverpod.dart';",
+      "",
+      "final ${TM_FILENAME_BASE/(.*)/${1:/camelcase}/}Provider = Provider.autoDispose(${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}.new);",
+      "",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} {",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}(this._ref);",
+      "  final Ref _ref;",
+      "",
+      "  Future<void> call() async {",
+      "    ",
+      "  }",
+      "}",
+      "",
+    ]
+  },
+}
