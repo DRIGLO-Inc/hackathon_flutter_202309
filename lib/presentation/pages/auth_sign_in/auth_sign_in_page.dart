@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/auth/use_cases/sign_in/sign_in.dart';
+import '../../../utils/extensions/navigator_state_ex.dart';
 import '../../widgets/buttons/obscure_text_switcher_button.dart';
 import '../../widgets/buttons/theme_switcher_button.dart';
 import '../../widgets/snack_bars/floating_snack_bar.dart';
@@ -56,7 +57,7 @@ class _AuthSignInPageState extends ConsumerState<AuthSignInPage> {
       );
 
       if (mounted) {
-        unawaited(Navigator.of(context).push(MainPage.route()));
+        unawaited(Navigator.of(context).pushAndRemoveAll(MainPage.route()));
       }
     } on Exception catch (_) {
       if (mounted) {

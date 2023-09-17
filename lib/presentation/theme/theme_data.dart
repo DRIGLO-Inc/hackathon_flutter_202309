@@ -7,8 +7,17 @@ class AppThemeData {
     required ColorScheme colorScheme,
   }) {
     return ThemeData(
+      // base
       useMaterial3: true,
       colorScheme: colorScheme,
+
+      // scaffold
+      appBarTheme: AppBarTheme(
+        backgroundColor: colorScheme.primaryContainer,
+        foregroundColor: colorScheme.onPrimaryContainer,
+      ),
+
+      // input
       inputDecorationTheme: const InputDecorationTheme(
         filled: true,
       ),

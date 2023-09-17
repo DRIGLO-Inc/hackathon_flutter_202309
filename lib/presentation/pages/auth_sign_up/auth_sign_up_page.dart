@@ -4,7 +4,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../domain/auth/use_cases/current_app_user/current_app_user_notifier.dart';
 import '../../../domain/auth/use_cases/sign_up/sign_up.dart';
+import '../../../utils/extensions/navigator_state_ex.dart';
 import '../../widgets/buttons/obscure_text_switcher_button.dart';
 import '../../widgets/buttons/theme_switcher_button.dart';
 import '../../widgets/snack_bars/floating_snack_bar.dart';
@@ -55,8 +57,8 @@ class _AuthSignUpPageState extends ConsumerState<AuthSignUpPage> {
         password: _passwordTextController.text,
       );
 
-      if (mounted) {
-        unawaited(Navigator.of(context).push(MainPage.route()));
+      if (mounted && ref.read(currentAppUserNotifierProvider).isAuthenticated) {
+        unawaited(Navigator.of(context).pushAndRemoveAll(MainPage.route()));
       }
     } on Exception catch (_) {
       if (mounted) {

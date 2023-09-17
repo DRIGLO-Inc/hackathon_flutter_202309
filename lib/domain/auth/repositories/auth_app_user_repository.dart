@@ -31,8 +31,7 @@ class AuthAppUserRepository {
       (client) => client.auth.signUp(
         email: email,
         password: password,
-        // TODO(tsuda): カスタムスキームに遷移
-        // emailRedirectTo: '',
+        emailRedirectTo: 'hackathonDriglo202309://',
       ),
     );
   }
@@ -42,6 +41,9 @@ class AuthAppUserRepository {
       (client) => client.auth.signOut(),
     );
   }
+
+  Stream<AuthState> get onAuthStateChange =>
+      _supabase.runSync((client) => client.auth.onAuthStateChange);
 
   User? getCurrentUser() => _supabase.runSync(
         (client) => client.auth.currentUser,
