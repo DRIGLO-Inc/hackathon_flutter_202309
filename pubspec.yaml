@@ -12,8 +12,13 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+
   # Architecture
   flutter_riverpod: ^2.4.0
+
+  # immutable
+  equatable: ^2.0.5
+  json_annotation: ^4.8.1
 
   # Supabse
   supabase_flutter: ^1.10.16
@@ -32,7 +37,6 @@ dependencies:
 
   # Extend dart
   intl: ^0.18.1
-  equatable: ^2.0.5
   pub_semver: ^2.1.4
 
   # Validator
@@ -54,6 +58,9 @@ dev_dependencies:
   pedantic_mono: ^1.24.0+1
   custom_lint: ^0.4.0
   riverpod_lint: ^1.3.2
+
+  # json_serializable
+  json_serializable: ^6.7.0
 
   # flutter_gen
   flutter_gen_runner: ^5.3.1
