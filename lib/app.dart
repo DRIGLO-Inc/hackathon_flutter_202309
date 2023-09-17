@@ -21,7 +21,7 @@ class App extends ConsumerWidget {
       darkTheme: AppThemeData.dark,
       home: currentUser.isAuthenticated
           ? const MainPage()
-          : const AuthSignInPage(),
+          : const AuthSignInPage(AuthSignInPageArgs()),
     );
   }
 }

@@ -23,6 +23,9 @@ dependencies:
   pull_to_refresh_flutter3: ^2.0.1
   adaptive_dialog: ^1.9.0+2
 
+  # Extend dart
+  equatable: ^2.0.5
+
   # Validator
   form_validator: ^2.1.1
 

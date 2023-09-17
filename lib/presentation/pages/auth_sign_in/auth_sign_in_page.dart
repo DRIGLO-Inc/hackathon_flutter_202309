@@ -1,20 +1,38 @@
+import 'dart:async';
+
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/auth/use_cases/sign_in/sign_in.dart';
+import '../../widgets/buttons/obscure_text_switcher_button.dart';
 import '../../widgets/buttons/theme_switcher_button.dart';
 import '../../widgets/snack_bars/floating_snack_bar.dart';
 import '../../widgets/unfocus_gesture_detector.dart';
+import '../auth_sign_up/auth_sign_up_page.dart';
+import '../main/main_page.dart';
+
+class AuthSignInPageArgs extends Equatable {
+  const AuthSignInPageArgs({this.email, this.password});
+
+  final String? email;
+  final String? password;
+
+  @override
+  List<Object?> get props => [email, password];
+}
 
 class AuthSignInPage extends ConsumerStatefulWidget {
-  const AuthSignInPage({super.key});
+  const AuthSignInPage(this.args, {super.key});
+
+  final AuthSignInPageArgs args;
 
   static const routeName = '/auth_sign_in';
 
-  static Route<void> route() {
+  static Route<void> route(AuthSignInPageArgs args) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (_) => const AuthSignInPage(),
+      builder: (_) => AuthSignInPage(args),
     );
   }
 
@@ -23,8 +41,12 @@ class AuthSignInPage extends ConsumerStatefulWidget {
 }
 
 class _AuthSignInPageState extends ConsumerState<AuthSignInPage> {
-  final _emailTextController = TextEditingController();
-  final _passwordTextController = TextEditingController();
+  late final _emailTextController =
+      TextEditingController(text: widget.args.email);
+  late final _passwordTextController =
+      TextEditingController(text: widget.args.password);
+
+  var _obscurePassword = true;
 
   Future<void> _onPressed() async {
     try {
@@ -32,6 +54,10 @@ class _AuthSignInPageState extends ConsumerState<AuthSignInPage> {
         email: _emailTextController.text,
         password: _passwordTextController.text,
       );
+
+      if (mounted) {
+        unawaited(Navigator.of(context).push(MainPage.route()));
+      }
     } on Exception catch (_) {
       if (mounted) {
         // TODO(tsuda): エラーの種類によって、メッセージを出し分ける
@@ -62,6 +88,8 @@ class _AuthSignInPageState extends ConsumerState<AuthSignInPage> {
                     children: [
                       TextFormField(
                         controller: _emailTextController,
+                        keyboardType: TextInputType.emailAddress,
+                        autofillHints: const [AutofillHints.email],
                         decoration: const InputDecoration(
                           label: Text('Email'),
                         ),
@@ -70,9 +98,17 @@ class _AuthSignInPageState extends ConsumerState<AuthSignInPage> {
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _passwordTextController,
-                        decoration: const InputDecoration(
-                          label: Text('Password'),
+                        autofillHints: const [AutofillHints.password],
+                        decoration: InputDecoration(
+                          label: const Text('Password'),
+                          suffixIcon: ObscureTextSwitcherButton(
+                            obscure: _obscurePassword,
+                            onChanged: (value) => setState(() {
+                              _obscurePassword = value;
+                            }),
+                          ),
                         ),
+                        obscureText: _obscurePassword,
                         onFieldSubmitted: (_) {
                           _onPressed();
                         },
@@ -80,7 +116,22 @@ class _AuthSignInPageState extends ConsumerState<AuthSignInPage> {
                       const SizedBox(height: 24),
                       FilledButton(
                         onPressed: _onPressed,
-                        child: const Text('送信'),
+                        child: const Text('ログイン'),
+                      ),
+                      const SizedBox(height: 24),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).replace(
+                            oldRoute: ModalRoute.of(context)!,
+                            newRoute: AuthSignUpPage.route(
+                              AuthSignUpPageArgs(
+                                email: _emailTextController.text,
+                                password: _passwordTextController.text,
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text('登録がお済みでない方'),
                       ),
                     ],
                   ),

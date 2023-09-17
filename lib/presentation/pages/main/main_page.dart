@@ -16,7 +16,7 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TODO'),
+        title: const Text('Main'),
       ),
       body: const Center(child: Text('MainPage')),
     );

@@ -23,6 +23,26 @@ class AuthAppUserRepository {
     );
   }
 
+  Future<AuthResponse> signUp({
+    required String email,
+    required String password,
+  }) async {
+    return _supabase.run(
+      (client) => client.auth.signUp(
+        email: email,
+        password: password,
+        // TODO(tsuda): カスタムスキームに遷移
+        // emailRedirectTo: '',
+      ),
+    );
+  }
+
+  Future<void> signOut() async {
+    return _supabase.run(
+      (client) => client.auth.signOut(),
+    );
+  }
+
   User? getCurrentUser() => _supabase.runSync(
         (client) => client.auth.currentUser,
       );
