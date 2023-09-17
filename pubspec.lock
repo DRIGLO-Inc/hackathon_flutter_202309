@@ -472,6 +472,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  package_info_plus:
+    dependency: "direct main"
+    description:
+      name: package_info_plus
+      sha256: "6ff267fcd9d48cb61c8df74a82680e8b82e940231bb5f68356672fde0397334a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
+  package_info_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: package_info_plus_platform_interface
+      sha256: "9bc8ba46813a4cc42c66ab781470711781940780fd8beddd0c3da62506d3a6c6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   path:
     dependency: transitive
     description:
@@ -561,7 +577,7 @@ packages:
     source: hosted
     version: "1.5.0"
   pub_semver:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: pub_semver
       sha256: "40d3ab1bbd474c4c2328c91e3a7df8c6dd629b79ece4c4bd04bee496a224fb0c"
@@ -633,7 +649,7 @@ packages:
     source: hosted
     version: "0.27.7"
   shared_preferences:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: shared_preferences
       sha256: b7f41bad7e521d205998772545de63ff4e6c97714775902c199353f8bf1511ac

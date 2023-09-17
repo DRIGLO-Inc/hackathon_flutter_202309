@@ -23,17 +23,41 @@ class AppThemeData {
       ),
 
       // others
+      dividerTheme: DividerThemeData(
+        color: colorScheme.outline,
+      ),
       snackBarTheme: const SnackBarThemeData(
         showCloseIcon: true,
+      ),
+      listTileTheme: ListTileThemeData(
+        tileColor: colorScheme.primaryContainer,
+        textColor: colorScheme.onPrimaryContainer,
       ),
     );
   }
 
   static ThemeData get light {
-    return _base(colorScheme: const ColorScheme.light());
+    const baseColorScheme = ColorScheme.light();
+
+    return _base(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: baseColorScheme.primary,
+        secondary: baseColorScheme.secondary,
+        error: baseColorScheme.error,
+      ),
+    );
   }
 
   static ThemeData get dark {
-    return _base(colorScheme: const ColorScheme.dark());
+    const baseColorScheme = ColorScheme.dark();
+
+    return _base(
+      colorScheme: ColorScheme.fromSeed(
+        brightness: Brightness.dark,
+        seedColor: baseColorScheme.primary,
+        secondary: baseColorScheme.secondary,
+        error: baseColorScheme.error,
+      ),
+    );
   }
 }
