@@ -45,7 +45,7 @@ class AuthAppUserRepository {
   Stream<AuthState> get onAuthStateChange =>
       _supabase.runSync((client) => client.auth.onAuthStateChange);
 
-  Future<AuthResponse>? getUser() => _supabase.runSync(
-        (client) => client.auth.refreshSession(),
+  Future<AuthResponse> getUser() async => _supabase.run(
+        (client) async => client.auth.refreshSession(),
       );
 }

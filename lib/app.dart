@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'domain/auth/use_cases/initialize_app/initialize_app.dart';
@@ -26,6 +27,11 @@ class App extends ConsumerWidget {
       themeMode: themeMode,
       theme: AppThemeData.light,
       darkTheme: AppThemeData.dark,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       home: home,
     );
   }
