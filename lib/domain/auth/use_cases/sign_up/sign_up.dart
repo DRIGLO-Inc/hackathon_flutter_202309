@@ -17,10 +17,10 @@ class SignUp {
         .read(authAppUserRepositoryProvider)
         .signUp(email: email, password: password);
 
-    if (auth.user != null) {
+    if (auth.user?.id case final String userId) {
       _ref
           .read(currentAppUserNotifierProvider.notifier)
-          .setUserId(userId: auth.user!.id);
+          .setUserId(userId: userId);
     }
   }
 }
