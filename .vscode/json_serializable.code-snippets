@@ -1,0 +1,25 @@
+{
+  "Snippets: json": {
+    "scope": "dart",
+    "prefix": ["jsonserializable"],
+    "description": "Create a Freezed class",
+    "body": [
+      "// ignore_for_file: invalid_annotation_target",
+      "",
+      "import 'package:json_annotation/json_annotation.dart';",
+      "",
+      "part '$TM_FILENAME_BASE.g.dart';",
+      "",
+      "@JsonSerializable()",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} with _$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} {",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}();",
+      "",
+      "  $0",
+      "",
+      "  factory ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}.fromJson(Map<String, Object?> json) => _$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}FromJson(json);",
+      "  Map<String, Object?> toJson() => _$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}ToJson(this);",
+      "}",
+      ""
+    ]
+  }
+}
