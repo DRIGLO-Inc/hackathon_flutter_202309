@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'color/color_scheme.dart';
+import 'typography/font_family.dart';
+import 'typography/typography.dart';
+
 class AppThemeData {
   const AppThemeData._();
 
@@ -8,6 +12,8 @@ class AppThemeData {
   }) {
     return ThemeData(
       // base
+      typography: typography,
+      fontFamily: defaultFontFamily,
       useMaterial3: true,
       colorScheme: colorScheme,
 
@@ -37,27 +43,10 @@ class AppThemeData {
   }
 
   static ThemeData get light {
-    const baseColorScheme = ColorScheme.light();
-
-    return _base(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: baseColorScheme.primary,
-        secondary: baseColorScheme.secondary,
-        error: baseColorScheme.error,
-      ),
-    );
+    return _base(colorScheme: AppColorScheme.light);
   }
 
   static ThemeData get dark {
-    const baseColorScheme = ColorScheme.dark();
-
-    return _base(
-      colorScheme: ColorScheme.fromSeed(
-        brightness: Brightness.dark,
-        seedColor: baseColorScheme.primary,
-        secondary: baseColorScheme.secondary,
-        error: baseColorScheme.error,
-      ),
-    );
+    return _base(colorScheme: AppColorScheme.dark);
   }
 }
