@@ -2,11 +2,36 @@
 ファイル分割や、アーキテクチャに便利なパッケージの多用をできるだけ抑えた設計にしている。
 Riverpod に依存している。
 
-## mock 層
-  - 本プロダクトに影響しない、ウィジェットの挙動などを確認するためだけのビルド。
-  - integration テストの様な使い方をする。
-
 ## domain 層
+  feature-first で定義する
+  ```
+  domain
+  ├── auth
+  │   ├── entities
+  │   │   └── current_app_user
+  │   │       └── current_app_user.dart
+  │   ├── exceptions
+  │   │   └── current_app_user_exceptions.dart
+  │   ├── repositories
+  │   │   └── auth_app_user_repository.dart
+  │   └── use_cases
+  │       ├── current_app_user
+  │       │   ├── auth_state_change_provider.dart
+  │       │   └── current_app_user_notifier.dart
+  │       ├── initialize_app
+  │       │   ├── initialize_app.dart
+  │       │   └── initialize_app_status.dart
+  │       ├── sign_in
+  │       │   └── sign_in.dart
+  │       ├── sign_out
+  │       │   └── sign_out.dart
+  │       └── sign_up
+  │           └── sign_up.dart
+  └── todo
+      ├── entities
+      └── repositories
+  ```
+  
   - entities
 
     データクラスの実装
@@ -14,7 +39,7 @@ Riverpod に依存している。
     - UI、リポジトリ、ユースケースに依存しない。
   - repository
 
-    外部データとの通信を行う。
+    モックに書き換えする必要がある、外部データとの通信を行う。
     - パッケージの変更に強くするために、引数や返り値で、パッケージに依存したクラスを返さないようにする。
     - ユースケースに依存しない。
     - プレゼンテーション層から直接利用しない。
@@ -125,12 +150,16 @@ Riverpod に依存している。
   - 複数のページで参照するウィジェットの実装。
   - 極力、ドメインモデルとは分離させるが、特定のデータを表示するために `ConsumerWidget` を実装することもある。
   - ダイアログの実装ルールは、[#ダイアログルート](#ダイアログルート) を参照。
-- res
+- theme
   
   テーマ、カラー定義や、テキストスタイルなどの UI 情報をまとめる。
 - route_observers
 
   画面遷移を検知して、処理を走らせる実装。
+
+# infrastructure 層
+外部 DB や、デバイスの API の利用に使う。
+
 
 # Routeの定義
 ## ページルート
