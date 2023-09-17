@@ -2,7 +2,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart' as adaptive_dialog;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../res/routes/dialog_route_settings.dart';
+import '../../constants/dialog_route_settings.dart';
 
 class PlatformAdaptiveAlertDialogAction<T>
     extends adaptive_dialog.AlertDialogAction<T> {

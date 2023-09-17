@@ -19,7 +19,7 @@ class SignIn {
         
     if (auth.user != null) {
       _ref
-          .read(currentAppUserNotifier.notifier)
+          .read(currentAppUserNotifierProvider.notifier)
           .setUserId(userId: auth.user!.id);
     }
   }

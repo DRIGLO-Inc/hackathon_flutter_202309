@@ -1,6 +1,6 @@
 /// ダイアログルートに設定する RouteSettings の name の固定値。
 ///
-/// NavigationObserver で、ダイアログのイベントをスキップしたい時などに活用。
+/// NavigationObserver で、ダイアログのイベントをスキップするためなどに活用。
 ///
 /// ```dart
 /// class RequestDialog extends StatelessWidget {

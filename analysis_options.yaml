@@ -14,5 +14,7 @@ linter:
     always_use_package_imports: false
     sort_pub_dependencies: false
 
+    use_setters_to_change_properties: false
+
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
