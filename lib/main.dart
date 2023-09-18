@@ -7,6 +7,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import 'app.dart';
+import 'infrastructure/isar/isar_config.dart';
 import 'infrastructure/package_info/package_info.dart';
 import 'infrastructure/shared_preferences/shared_preferences.dart';
 import 'infrastructure/supabase/supabase_config.dart';
@@ -20,10 +21,13 @@ void main() async {
 
   // DateFormat を日本語に
   Intl.defaultLocale = kDefaultDateLocale;
-  
+
   await Future.wait([
     // Supabase
     SupabaseConfig.init(),
+
+    // Isar
+    IsarConfig.init(),
 
     // PackageInfo
     Future(() async {

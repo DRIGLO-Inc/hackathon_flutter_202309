@@ -26,6 +26,7 @@ dependencies:
   # Device API
   package_info_plus: ^4.1.0
   shared_preferences: ^2.2.1
+  path_provider: ^2.1.1
 
   # UI
   cupertino_icons: ^1.0.2
@@ -49,6 +50,10 @@ dependencies:
   timezone: ^0.9.2
   flutter_native_timezone: ^2.0.0
 
+  # Local DB
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -67,6 +72,9 @@ dev_dependencies:
 
   # flutter_gen
   flutter_gen_runner: ^5.3.1
+
+  # Isar
+  isar_generator: ^3.1.0+1
 
 flutter:
   uses-material-design: true
