@@ -1,5 +1,1 @@
-import 'package:flutter/foundation.dart';
-
-final defaultFontFamily = defaultTargetPlatform == TargetPlatform.iOS
-    ? 'Hiragino Kaku Gothic ProN'
-    : null;
+const defaultFontFamily = 'Hiragino Kaku Gothic ProN';

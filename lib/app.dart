@@ -7,6 +7,7 @@ import 'domain/auth/use_cases/initialize_app/initialize_app_status.dart';
 import 'presentation/pages/auth_sign_in/auth_sign_in_page.dart';
 import 'presentation/pages/main/main_page.dart';
 import 'presentation/providers/theme_switcher_notifier.dart';
+import 'presentation/theme/global_keys.dart';
 import 'presentation/theme/theme_data.dart';
 
 class App extends ConsumerWidget {
@@ -24,6 +25,8 @@ class App extends ConsumerWidget {
     };
 
     return MaterialApp(
+      navigatorKey: globalNavigatorKey,
+      scaffoldMessengerKey: globalScaffoldMessengerKey,
       themeMode: themeMode,
       theme: AppThemeData.light,
       darkTheme: AppThemeData.dark,
