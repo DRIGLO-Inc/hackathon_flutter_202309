@@ -8,6 +8,7 @@ import '../../theme/typography/typography.dart';
 import '../../widgets/forms/search_text_field.dart';
 import '../../widgets/unfocus_gesture_detector.dart';
 import '../auth_sign_in/auth_sign_in_page.dart';
+import '../question_adding_genre_selecting_page/question_adding_genre_selecting_page.dart';
 import 'widgets/select_genre_card_list.dart';
 import 'widgets/select_room_card_list.dart';
 import 'widgets/sliver_header_image.dart';
@@ -30,15 +31,10 @@ class MainPage extends ConsumerWidget {
       child: Scaffold(
         floatingActionButton: FloatingActionButton.large(
           shape: const StadiumBorder(),
-          // TODO(Tani1015): 問題作成画面へ遷移に変更
-          onPressed: () async {
-            await ref.read(signOutProvider)();
-
-            if (context.mounted) {
-              await Navigator.of(context).pushAndRemoveAll(
-                AuthSignInPage.route(const AuthSignInPageArgs()),
-              );
-            }
+          onPressed: () {
+            Navigator.of(context).push(
+              QuestionAddingGenreSelectingPage.route(),
+            );
           },
           child: Text('テストを\nつくる', style: customTextTheme.body5.w6),
         ),

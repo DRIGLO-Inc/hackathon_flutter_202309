@@ -29,12 +29,17 @@ class $AssetsImagesPngGen {
   AssetGenImage get mainImage =>
       const AssetGenImage('assets/images/png/main_image.png');
 
+  /// File path: assets/images/png/question_adding_header.png
+  AssetGenImage get questionAddingHeader =>
+      const AssetGenImage('assets/images/png/question_adding_header.png');
+
   /// File path: assets/images/png/sign_in_image.png
   AssetGenImage get signInImage =>
       const AssetGenImage('assets/images/png/sign_in_image.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [mainHeaderImage, mainImage, signInImage];
+  List<AssetGenImage> get values =>
+      [mainHeaderImage, mainImage, questionAddingHeader, signInImage];
 }
 
 class $AssetsImagesSvgGen {
