@@ -20,7 +20,8 @@ MatchRoom _$MatchRoomFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MatchRoom {
-  String get roomId => throw _privateConstructorUsedError;
+  String get matchRoomId => throw _privateConstructorUsedError;
+  String get ownerId => throw _privateConstructorUsedError;
   String get invitationId => throw _privateConstructorUsedError;
   bool get isStart => throw _privateConstructorUsedError;
 
@@ -35,7 +36,8 @@ abstract class $MatchRoomCopyWith<$Res> {
   factory $MatchRoomCopyWith(MatchRoom value, $Res Function(MatchRoom) then) =
       _$MatchRoomCopyWithImpl<$Res, MatchRoom>;
   @useResult
-  $Res call({String roomId, String invitationId, bool isStart});
+  $Res call(
+      {String matchRoomId, String ownerId, String invitationId, bool isStart});
 }
 
 /// @nodoc
@@ -51,14 +53,19 @@ class _$MatchRoomCopyWithImpl<$Res, $Val extends MatchRoom>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? roomId = null,
+    Object? matchRoomId = null,
+    Object? ownerId = null,
     Object? invitationId = null,
     Object? isStart = null,
   }) {
     return _then(_value.copyWith(
-      roomId: null == roomId
-          ? _value.roomId
-          : roomId // ignore: cast_nullable_to_non_nullable
+      matchRoomId: null == matchRoomId
+          ? _value.matchRoomId
+          : matchRoomId // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
       invitationId: null == invitationId
           ? _value.invitationId
@@ -79,7 +86,8 @@ abstract class _$$_MatchRoomCopyWith<$Res> implements $MatchRoomCopyWith<$Res> {
       __$$_MatchRoomCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String roomId, String invitationId, bool isStart});
+  $Res call(
+      {String matchRoomId, String ownerId, String invitationId, bool isStart});
 }
 
 /// @nodoc
@@ -93,14 +101,19 @@ class __$$_MatchRoomCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? roomId = null,
+    Object? matchRoomId = null,
+    Object? ownerId = null,
     Object? invitationId = null,
     Object? isStart = null,
   }) {
     return _then(_$_MatchRoom(
-      roomId: null == roomId
-          ? _value.roomId
-          : roomId // ignore: cast_nullable_to_non_nullable
+      matchRoomId: null == matchRoomId
+          ? _value.matchRoomId
+          : matchRoomId // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
       invitationId: null == invitationId
           ? _value.invitationId
@@ -118,14 +131,19 @@ class __$$_MatchRoomCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MatchRoom extends _MatchRoom {
   const _$_MatchRoom(
-      {required this.roomId, required this.invitationId, required this.isStart})
+      {required this.matchRoomId,
+      required this.ownerId,
+      required this.invitationId,
+      required this.isStart})
       : super._();
 
   factory _$_MatchRoom.fromJson(Map<String, dynamic> json) =>
       _$$_MatchRoomFromJson(json);
 
   @override
-  final String roomId;
+  final String matchRoomId;
+  @override
+  final String ownerId;
   @override
   final String invitationId;
   @override
@@ -133,7 +151,7 @@ class _$_MatchRoom extends _MatchRoom {
 
   @override
   String toString() {
-    return 'MatchRoom(roomId: $roomId, invitationId: $invitationId, isStart: $isStart)';
+    return 'MatchRoom(matchRoomId: $matchRoomId, ownerId: $ownerId, invitationId: $invitationId, isStart: $isStart)';
   }
 
   @override
@@ -141,7 +159,9 @@ class _$_MatchRoom extends _MatchRoom {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MatchRoom &&
-            (identical(other.roomId, roomId) || other.roomId == roomId) &&
+            (identical(other.matchRoomId, matchRoomId) ||
+                other.matchRoomId == matchRoomId) &&
+            (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
             (identical(other.invitationId, invitationId) ||
                 other.invitationId == invitationId) &&
             (identical(other.isStart, isStart) || other.isStart == isStart));
@@ -149,7 +169,8 @@ class _$_MatchRoom extends _MatchRoom {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, roomId, invitationId, isStart);
+  int get hashCode =>
+      Object.hash(runtimeType, matchRoomId, ownerId, invitationId, isStart);
 
   @JsonKey(ignore: true)
   @override
@@ -167,7 +188,8 @@ class _$_MatchRoom extends _MatchRoom {
 
 abstract class _MatchRoom extends MatchRoom {
   const factory _MatchRoom(
-      {required final String roomId,
+      {required final String matchRoomId,
+      required final String ownerId,
       required final String invitationId,
       required final bool isStart}) = _$_MatchRoom;
   const _MatchRoom._() : super._();
@@ -176,7 +198,9 @@ abstract class _MatchRoom extends MatchRoom {
       _$_MatchRoom.fromJson;
 
   @override
-  String get roomId;
+  String get matchRoomId;
+  @override
+  String get ownerId;
   @override
   String get invitationId;
   @override
