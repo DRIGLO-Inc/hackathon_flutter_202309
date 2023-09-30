@@ -4,21 +4,44 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/auth/use_cases/question_adding/question_adding_page_providers.dart';
 
 class QuestionAddingPage extends ConsumerWidget {
-  const QuestionAddingPage({super.key});
+  const QuestionAddingPage._();
+
+  static const routeName = '/question_adding_page';
+
+  static Route<void> route() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => const QuestionAddingPage._(),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final editingQuestionsCount = ref.watch(editingQuestionsCountProvider);
+    final editingQuestionUuids =
+        ref.watch(editingQuestionUuidsNotifierProvider);
+    final editingQuestionUuidsNotifier =
+        ref.watch(editingQuestionUuidsNotifierProvider.notifier);
 
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: CustomScrollView(
           slivers: [
             SliverList.builder(
-              itemCount: editingQuestionsCount,
+              itemCount: editingQuestionUuids.length,
               itemBuilder: (context, index) {
-                return _SliverQuestionAddingForm(index);
+                return _SliverQuestionAddingForm(
+                  uuid: editingQuestionUuids[index],
+                  canRemove: editingQuestionUuids.length != 1,
+                );
               },
+            ),
+            SliverToBoxAdapter(
+              child: FilledButton.icon(
+                onPressed: editingQuestionUuidsNotifier.addQuestion,
+                icon: const Icon(Icons.add),
+                label: const Text('質問を追加'),
+              ),
             ),
           ],
         ),
@@ -28,9 +51,13 @@ class QuestionAddingPage extends ConsumerWidget {
 }
 
 class _SliverQuestionAddingForm extends ConsumerStatefulWidget {
-  const _SliverQuestionAddingForm(this.index);
+  const _SliverQuestionAddingForm({
+    required this.uuid,
+    required this.canRemove,
+  });
 
-  final int index;
+  final String uuid;
+  final bool canRemove;
 
   @override
   ConsumerState<_SliverQuestionAddingForm> createState() =>
@@ -39,7 +66,7 @@ class _SliverQuestionAddingForm extends ConsumerStatefulWidget {
 
 class __SliverQuestionAddingFormState
     extends ConsumerState<_SliverQuestionAddingForm> {
-  late final question = ref.watch(editingQuestionProviderFamily(widget.index));
+  late final question = ref.watch(editingQuestionProviderFamily(widget.uuid));
 
   final questionTextCtr = TextEditingController();
   final answerTextCtr = TextEditingController();
@@ -48,12 +75,12 @@ class __SliverQuestionAddingFormState
   void initState() {
     questionTextCtr.addListener(() {
       ref
-          .read(editingQuestionProviderFamily(widget.index).notifier)
+          .read(editingQuestionProviderFamily(widget.uuid).notifier)
           .update((state) => state.copyWith(title: questionTextCtr.text));
     });
     answerTextCtr.addListener(() {
       ref
-          .read(editingQuestionProviderFamily(widget.index).notifier)
+          .read(editingQuestionProviderFamily(widget.uuid).notifier)
           .update((state) => state.copyWith(title: answerTextCtr.text));
     });
     super.initState();
@@ -61,19 +88,30 @@ class __SliverQuestionAddingFormState
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Column(
-        children: [
-          const Text('質問文を入力してください'),
-          TextFormField(
-            controller: questionTextCtr,
-          ),
-          const Text('回答を入力してください（カンマ区切りで複数登録可）'),
-          TextFormField(
-            controller: answerTextCtr,
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        Row(
+          children: [
+            const Text('質問文を入力してください'),
+            if (widget.canRemove)
+              TextButton(
+                onPressed: () {
+                  ref
+                      .read(editingQuestionUuidsNotifierProvider.notifier)
+                      .removeQuestion(widget.uuid);
+                },
+                child: const Text('削除'),
+              ),
+          ],
+        ),
+        TextFormField(
+          controller: questionTextCtr,
+        ),
+        const Text('回答を入力してください（カンマ区切りで複数登録可）'),
+        TextFormField(
+          controller: answerTextCtr,
+        ),
+      ],
     );
   }
 }

@@ -20,4 +20,6 @@ class Question with _$Question {
   const Question._();
   factory Question.fromJson(Map<String, Object?> json) =>
       _$QuestionFromJson(json);
+
+  
 }
