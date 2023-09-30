@@ -8,10 +8,12 @@ class SearchTextField extends StatelessWidget {
     return TextFormField(
       decoration: const InputDecoration(
         suffix: Icon(Icons.search),
+
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
+
       ),
     );
   }

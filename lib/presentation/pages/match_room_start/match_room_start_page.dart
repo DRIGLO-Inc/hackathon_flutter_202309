@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/match_room/use_cases/match_room_watch_is_start.dart';
+import '../../widgets/dialogs/ok_cancel_dialog.dart';
 import 'widgets/match_room_after_start_view.dart';
 import 'widgets/match_room_before_start_view.dart';
 
@@ -30,11 +31,22 @@ class MatchRoomStartPage extends ConsumerWidget {
     final isStartAsync = ref.watch(matchRoomIsStartProvider);
     return isStartAsync.when(
       data: (isStart) {
-        if (isStart) {
-          return const MatchRoomAfterStartView();
-        } else {
-          return const MatchRoomBeforeStartView();
-        }
+        return WillPopScope(
+          onWillPop: () async {
+            return OkCancelDialog.show(
+              context,
+              args: const OkCancelDialogArgs(
+                title: '退出しちゃいますか😢？',
+                content: '主じゃないメンバーが画面を閉じようとしたときにでるダイアログの予定（文言は挙動に合わせます）',
+                cancelLabel: '退出しない',
+                okLabel: '退出する',
+              ),
+            ).then((value) => value ?? false);
+          },
+          child: isStart
+              ? const MatchRoomAfterStartView()
+              : const MatchRoomBeforeStartView(),
+        );
       },
       loading: () => Scaffold(
         appBar: AppBar(),

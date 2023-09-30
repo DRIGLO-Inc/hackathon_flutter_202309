@@ -23,9 +23,15 @@ class AppThemeData {
         foregroundColor: colorScheme.onPrimaryContainer,
       ),
 
+      // dialog
+      dialogTheme: DialogTheme(
+        backgroundColor: colorScheme.background,
+      ),
+
       // input
       inputDecorationTheme: const InputDecorationTheme(
         filled: true,
+        border: InputBorder.none,
       ),
 
       // others
