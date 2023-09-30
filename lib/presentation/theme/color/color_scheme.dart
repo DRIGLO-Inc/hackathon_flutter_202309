@@ -13,8 +13,8 @@ class AppColorScheme {
     error: CustomColors.accentRed,
     onError: ColorName.white,
     background: ColorName.white,
-    onBackground: ColorName.black,
+    onBackground: ColorName.gray700,
     surface: ColorName.gray100,
-    onSurface: ColorName.black,
+    onSurface: ColorName.gray700,
   );
 }

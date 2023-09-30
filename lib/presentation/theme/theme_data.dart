@@ -19,8 +19,8 @@ class AppThemeData {
 
       // scaffold
       appBarTheme: AppBarTheme(
-        backgroundColor: colorScheme.primaryContainer,
-        foregroundColor: colorScheme.onPrimaryContainer,
+        backgroundColor: colorScheme.background,
+        foregroundColor: colorScheme.onBackground,
       ),
 
       // dialog
