@@ -22,6 +22,7 @@ UserAnswer _$UserAnswerFromJson(Map<String, dynamic> json) {
 mixin _$UserAnswer {
   String get userAnswerId => throw _privateConstructorUsedError;
   MatchRoomQuestion get matchRoomQuestion => throw _privateConstructorUsedError;
+  String get answer => throw _privateConstructorUsedError;
   UserData get user => throw _privateConstructorUsedError;
   bool get isCorrect => throw _privateConstructorUsedError;
   @SecondsDurationConverter()
@@ -42,6 +43,7 @@ abstract class $UserAnswerCopyWith<$Res> {
   $Res call(
       {String userAnswerId,
       MatchRoomQuestion matchRoomQuestion,
+      String answer,
       UserData user,
       bool isCorrect,
       @SecondsDurationConverter() Duration? durationTakenToUserAnswer});
@@ -65,6 +67,7 @@ class _$UserAnswerCopyWithImpl<$Res, $Val extends UserAnswer>
   $Res call({
     Object? userAnswerId = null,
     Object? matchRoomQuestion = null,
+    Object? answer = null,
     Object? user = null,
     Object? isCorrect = null,
     Object? durationTakenToUserAnswer = freezed,
@@ -78,6 +81,10 @@ class _$UserAnswerCopyWithImpl<$Res, $Val extends UserAnswer>
           ? _value.matchRoomQuestion
           : matchRoomQuestion // ignore: cast_nullable_to_non_nullable
               as MatchRoomQuestion,
+      answer: null == answer
+          ? _value.answer
+          : answer // ignore: cast_nullable_to_non_nullable
+              as String,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -121,6 +128,7 @@ abstract class _$$_UserAnswerCopyWith<$Res>
   $Res call(
       {String userAnswerId,
       MatchRoomQuestion matchRoomQuestion,
+      String answer,
       UserData user,
       bool isCorrect,
       @SecondsDurationConverter() Duration? durationTakenToUserAnswer});
@@ -144,6 +152,7 @@ class __$$_UserAnswerCopyWithImpl<$Res>
   $Res call({
     Object? userAnswerId = null,
     Object? matchRoomQuestion = null,
+    Object? answer = null,
     Object? user = null,
     Object? isCorrect = null,
     Object? durationTakenToUserAnswer = freezed,
@@ -157,6 +166,10 @@ class __$$_UserAnswerCopyWithImpl<$Res>
           ? _value.matchRoomQuestion
           : matchRoomQuestion // ignore: cast_nullable_to_non_nullable
               as MatchRoomQuestion,
+      answer: null == answer
+          ? _value.answer
+          : answer // ignore: cast_nullable_to_non_nullable
+              as String,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -179,6 +192,7 @@ class _$_UserAnswer extends _UserAnswer {
   const _$_UserAnswer(
       {required this.userAnswerId,
       required this.matchRoomQuestion,
+      required this.answer,
       required this.user,
       required this.isCorrect,
       @SecondsDurationConverter() this.durationTakenToUserAnswer})
@@ -192,6 +206,8 @@ class _$_UserAnswer extends _UserAnswer {
   @override
   final MatchRoomQuestion matchRoomQuestion;
   @override
+  final String answer;
+  @override
   final UserData user;
   @override
   final bool isCorrect;
@@ -201,7 +217,7 @@ class _$_UserAnswer extends _UserAnswer {
 
   @override
   String toString() {
-    return 'UserAnswer(userAnswerId: $userAnswerId, matchRoomQuestion: $matchRoomQuestion, user: $user, isCorrect: $isCorrect, durationTakenToUserAnswer: $durationTakenToUserAnswer)';
+    return 'UserAnswer(userAnswerId: $userAnswerId, matchRoomQuestion: $matchRoomQuestion, answer: $answer, user: $user, isCorrect: $isCorrect, durationTakenToUserAnswer: $durationTakenToUserAnswer)';
   }
 
   @override
@@ -213,6 +229,7 @@ class _$_UserAnswer extends _UserAnswer {
                 other.userAnswerId == userAnswerId) &&
             (identical(other.matchRoomQuestion, matchRoomQuestion) ||
                 other.matchRoomQuestion == matchRoomQuestion) &&
+            (identical(other.answer, answer) || other.answer == answer) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.isCorrect, isCorrect) ||
                 other.isCorrect == isCorrect) &&
@@ -224,7 +241,7 @@ class _$_UserAnswer extends _UserAnswer {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, userAnswerId, matchRoomQuestion,
-      user, isCorrect, durationTakenToUserAnswer);
+      answer, user, isCorrect, durationTakenToUserAnswer);
 
   @JsonKey(ignore: true)
   @override
@@ -244,6 +261,7 @@ abstract class _UserAnswer extends UserAnswer {
   const factory _UserAnswer(
       {required final String userAnswerId,
       required final MatchRoomQuestion matchRoomQuestion,
+      required final String answer,
       required final UserData user,
       required final bool isCorrect,
       @SecondsDurationConverter()
@@ -257,6 +275,8 @@ abstract class _UserAnswer extends UserAnswer {
   String get userAnswerId;
   @override
   MatchRoomQuestion get matchRoomQuestion;
+  @override
+  String get answer;
   @override
   UserData get user;
   @override

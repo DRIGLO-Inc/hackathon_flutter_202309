@@ -14,6 +14,7 @@ class UserAnswer with _$UserAnswer {
   const factory UserAnswer({
     required String userAnswerId,
     required MatchRoomQuestion matchRoomQuestion,
+    required String answer,
     required UserData user,
     required bool isCorrect,
     @SecondsDurationConverter() Duration? durationTakenToUserAnswer,

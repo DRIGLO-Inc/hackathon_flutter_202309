@@ -11,6 +11,7 @@ _$_UserAnswer _$$_UserAnswerFromJson(Map<String, dynamic> json) =>
       userAnswerId: json['user_answer_id'] as String,
       matchRoomQuestion: MatchRoomQuestion.fromJson(
           json['match_room_question'] as Map<String, dynamic>),
+      answer: json['answer'] as String,
       user: UserData.fromJson(json['user'] as Map<String, dynamic>),
       isCorrect: json['is_correct'] as bool,
       durationTakenToUserAnswer: _$JsonConverterFromJson<int, Duration>(
@@ -22,6 +23,7 @@ Map<String, dynamic> _$$_UserAnswerToJson(_$_UserAnswer instance) =>
     <String, dynamic>{
       'user_answer_id': instance.userAnswerId,
       'match_room_question': instance.matchRoomQuestion,
+      'answer': instance.answer,
       'user': instance.user,
       'is_correct': instance.isCorrect,
       'duration_taken_to_user_answer': _$JsonConverterToJson<int, Duration>(
