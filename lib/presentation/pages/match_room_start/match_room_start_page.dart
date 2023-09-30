@@ -29,6 +29,7 @@ class MatchRoomStartPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isStartAsync = ref.watch(matchRoomIsStartProvider);
+
     return isStartAsync.when(
       data: (isStart) {
         return WillPopScope(

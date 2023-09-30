@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,109 +9,129 @@ import '../../question/entities/question.dart';
 import '../../user_answer/entities/user_answer.dart';
 import '../../user_data/user_data.dart';
 import '../entities/match_room_chat.dart';
+import 'match_room_chat_answered_questions.dart';
 import 'match_room_chat_count.dart';
-import 'match_room_chat_current_question_id.dart';
 
-final matchRoomChatListNotifier = AsyncNotifierProvider.autoDispose<
+final matchRoomChatListNotifierProvider = AsyncNotifierProvider.autoDispose<
     MatchRoomChatListNotifier, List<MatchRoomChat>>(
   MatchRoomChatListNotifier.new,
 );
 
 class MatchRoomChatListNotifier
     extends AutoDisposeAsyncNotifier<List<MatchRoomChat>> {
+  List<MatchRoomChat> _fetchedList = [];
+
   @override
   FutureOr<List<MatchRoomChat>> build() {
+    ref.onDispose(() {
+      _timer?.cancel();
+    });
+
     _listenTimer();
 
     // TODO(tsuda): 取得したものをまとめる
-    return [
-      MatchRoomChat(
-        matchRoomQuestion: const MatchRoomQuestion(
-          matchRoomQuestionId: 'matchRoomQuestionId',
-          roomId: 'roomId',
-          question: Question(
-            questionId: 'questionId',
-            title: 'title',
-            answer: 'answer',
-            genre: Genre(genreId: 'genreId', genreName: 'genreName'),
-          ),
-          order: 1,
-        ),
-        userAnswerList: [
-          UserAnswer(
-            userAnswerId: 'userAnswerId',
-            matchRoomQuestion: const MatchRoomQuestion(
-              matchRoomQuestionId: 'matchRoomQuestionId',
-              roomId: 'roomId',
-              question: Question(
-                questionId: 'questionId',
-                title: 'title',
-                answer: 'answer',
-                genre: Genre(genreId: 'genreId', genreName: 'genreName'),
-              ),
-              order: 1,
+    _fetchedList = [
+      for (var i = 1; i < 5; i++)
+        MatchRoomChat(
+          matchRoomQuestion: MatchRoomQuestion(
+            matchRoomQuestionId: 'matchRoomQuestionId$i',
+            roomId: 'roomId$i',
+            question: Question(
+              questionId: 'questionId$i',
+              title: 'title$i',
+              answer: 'answer$i',
+              genre: const Genre(genreId: 'genreId', genreName: 'genreName'),
             ),
-            answer: 'answer' * 5,
-            user: const UserData(userId: 'userId', userName: 'userName'),
-            isCorrect: true,
+            order: i,
           ),
-        ],
-      ),
+        ),
     ];
+
+    if (_fetchedList.isEmpty) {
+      return [];
+    }
+
+    _listenUserAnswer(
+      matchRoomQuestion: _fetchedList.first.matchRoomQuestion,
+    );
+    return [_fetchedList.first];
   }
 
-  ProviderSubscription<AsyncValue<int>>? _countTimerSub;
+  Timer? _timer;
 
   void _listenTimer() {
-    _countTimerSub = ref.listen<AsyncValue<int>>(
-      matchRoomCountProvider,
-      (_, next) {
-        if (next.valueOrNull == 15) {
-          final currentQuestionId = ref.read(
-            matchRoomChatCurrentQuestionIdProvider,
-          );
+    ref.read(matchRoomCountProvider.notifier).state = 0;
 
-          final currentValue = state.valueOrNull;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      ref.read(matchRoomCountProvider.notifier).state = timer.tick;
 
-          if (currentValue == null) {
-            _countTimerSub?.close();
-            _countTimerSub = null;
-            return;
-          }
+      if (timer.tick == MatchRoomChatCount.maxCount) {
+        timer.cancel();
+        _setNextQuestionIfExist();
+      }
+    });
+  }
 
-          if (currentQuestionId == null) {
-            ref
-                    .read(
-                      matchRoomChatCurrentQuestionIdProvider.notifier,
-                    )
-                    .state =
-                currentValue.first.matchRoomQuestion.question.questionId;
-          } else {
-            final index = currentValue.indexWhere(
-              (element) =>
-                  element.matchRoomQuestion.question.questionId ==
-                  currentQuestionId,
-            );
+  StreamSubscription<UserAnswer>? _streamSubscription;
 
-            final nextQuestionId = currentValue
-                .elementAtOrNull(index + 1)
-                ?.matchRoomQuestion
-                .question
-                .questionId;
+  // TODO(tsuda): ユーザーのアンサーを監視
+  void _listenUserAnswer({required MatchRoomQuestion matchRoomQuestion}) {
+    _streamSubscription?.cancel();
 
-            if (index.isNegative || nextQuestionId == null) {
-              _countTimerSub?.close();
-              _countTimerSub = null;
-            } else {
-              ref
-                  .read(
-                    matchRoomChatCurrentQuestionIdProvider.notifier,
-                  )
-                  .state = nextQuestionId;
-            }
-          }
-        }
-      },
+    _streamSubscription = Stream.fromFuture(
+      Future.delayed(
+        const Duration(seconds: 1),
+        () => UserAnswer(
+          userAnswerId: 'userAnswerId',
+          matchRoomQuestion: matchRoomQuestion,
+          answer: 'answer',
+          user: UserData(
+            userId: '',
+            userName:
+                '太郎${matchRoomQuestion.matchRoomQuestionId.split('').last}',
+          ),
+          isCorrect: Random().nextBool(),
+        ),
+      ),
+    ).listen((event) {
+      state = state.whenData(
+        (value) => [
+          for (final e in value)
+            if (e.matchRoomQuestion.matchRoomQuestionId ==
+                matchRoomQuestion.matchRoomQuestionId)
+              e.copyWith(userAnswerList: [...e.userAnswerList, event])
+            else
+              e,
+        ],
+      );
+    });
+  }
+
+  void _setNextQuestionIfExist() {
+    final currentQuestion = state.asData!.value.last.matchRoomQuestion;
+    final index = _fetchedList.indexWhere(
+      (element) =>
+          element.matchRoomQuestion.question.questionId ==
+          currentQuestion.question.questionId,
     );
+
+    ref
+        .read(matchRoomAnsweredQuestionIdsProvider.notifier)
+        .update((state) => [...state, currentQuestion.matchRoomQuestionId]);
+    final next = _fetchedList.elementAtOrNull(index + 1);
+
+    _streamSubscription?.cancel();
+
+    if (next != null) {
+      _listenUserAnswer(
+        matchRoomQuestion: next.matchRoomQuestion,
+      );
+      state = AsyncData([
+        ...state.asData!.value,
+        next,
+      ]);
+
+      _listenTimer();
+    } else {}
   }
 }

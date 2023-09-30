@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../gen/colors.gen.dart';
 import '../../../theme/color/custom_colors.dart';
+import '../../../widgets/primary_shader_mask.dart';
 
 class ChatAnswerAppBar extends PreferredSize {
   const ChatAnswerAppBar({
@@ -20,49 +21,51 @@ class ChatAnswerAppBar extends PreferredSize {
         borderRadius: const BorderRadius.vertical(
           bottom: Radius.circular(18),
         ),
-        color: CustomColors.primaryMain,
-        child: Padding(
-          padding: EdgeInsets.only(top: mediaPadding.top),
-          child: NavigationToolbar(
-            centerMiddle: false,
-            middle: Row(
-              children: [
-                const DecoratedBox(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: CustomColors.accentGreen,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(12),
-                    child: Icon(
-                      Icons.edit,
+        clipBehavior: Clip.antiAlias,
+        child: PrimaryShaderMask(
+          child: Padding(
+            padding: EdgeInsets.only(top: mediaPadding.top),
+            child: NavigationToolbar(
+              centerMiddle: false,
+              middle: Row(
+                children: [
+                  const DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
                       color: ColorName.white,
                     ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      child,
-                      const SizedBox(height: 4),
-                      const Text(
-                        '4人参加 全10問',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Icon(
+                        Icons.edit_outlined,
+                        color: CustomColors.primaryMain,
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close),
-                ),
-              ],
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        child,
+                        const SizedBox(height: 4),
+                        const Text(
+                          '4人参加 全10問',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

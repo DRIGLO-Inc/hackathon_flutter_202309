@@ -2,20 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../domain/match_room_chat/entities/match_room_chat.dart';
+import '../../../../domain/match_room_chat/use_cases/match_room_chat_answered_questions.dart';
 import '../../../../domain/match_room_chat/use_cases/match_room_chat_notifier.dart';
-import '../../../widgets/form/rounded_rectangle_text_from.dart';
+import '../../../../domain/user_answer/use_cases/user_answer_save.dart';
+import '../../../../utils/extensions/build_context_ex.dart';
+import '../../../theme/color/custom_colors.dart';
+import '../../../widgets/dialogs/ok_cancel_dialog.dart';
 import '../../../widgets/unfocus_gesture_detector.dart';
 import 'chat_answer_app_bar.dart';
 import 'chat_bubble.dart';
 import 'timer_counter.dart';
 
-class MatchRoomAfterStartView extends StatelessWidget {
+class MatchRoomAfterStartView extends ConsumerStatefulWidget {
   const MatchRoomAfterStartView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final chatController = TextEditingController();
+  ConsumerState<MatchRoomAfterStartView> createState() =>
+      _MatchRoomAfterStartViewState();
+}
 
+class _MatchRoomAfterStartViewState
+    extends ConsumerState<MatchRoomAfterStartView> {
+  final _chatController = TextEditingController();
+
+  void _send(String value) {
+    if (value.isEmpty) {
+      return;
+    }
+
+    ref.read(userAnswerSaveProvider)(value);
+
+    context.unfocus();
+    _chatController.clear();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return UnfocusGestureDetector(
       child: Scaffold(
         appBar: const ChatAnswerAppBar(
@@ -50,11 +72,42 @@ class MatchRoomAfterStartView extends StatelessWidget {
                   EdgeInsets.only(
                     bottom: MediaQuery.paddingOf(context).bottom + 16,
                   ),
-              child: RoundedRectangleTextForm(
-                controller: chatController,
-                minLines: 1,
-                maxLines: 8,
-                textHeight: 1.3,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _chatController,
+                      minLines: 1,
+                      textInputAction: TextInputAction.send,
+                      onFieldSubmitted: _send,
+                      decoration: const InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(
+                            color: CustomColors.grayShade300,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          borderSide: BorderSide(
+                            color: CustomColors.primaryMain,
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  SizedBox(
+                    height: 56,
+                    child: FilledButton(
+                      onPressed: () {
+                        _send(_chatController.text);
+                      },
+                      child: const Icon(Icons.send),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -67,7 +120,7 @@ class MatchRoomAfterStartView extends StatelessWidget {
 class _Body extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final list = ref.watch(matchRoomChatListNotifier).value ?? [];
+    final list = ref.watch(matchRoomChatListNotifierProvider).value ?? [];
 
     return CustomScrollView(
       reverse: true,
@@ -77,11 +130,14 @@ class _Body extends ConsumerWidget {
             horizontal: 16,
             vertical: 8,
           ),
+          // FIXME: SliverAnimatedList に変更
           sliver: SliverList.separated(
             separatorBuilder: (_, index) => const SizedBox(height: 8),
             itemCount: list.length,
             itemBuilder: (_, index) {
-              return _ListTile(matchRoomChat: list.reversed.toList()[index]);
+              return _ListTile(
+                matchRoomChat: list.reversed.toList()[index],
+              );
             },
           ),
         ),
@@ -90,13 +146,18 @@ class _Body extends ConsumerWidget {
   }
 }
 
-class _ListTile extends StatelessWidget {
+class _ListTile extends ConsumerWidget {
   const _ListTile({required this.matchRoomChat});
 
   final MatchRoomChat matchRoomChat;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final showAnswer = ref.watch(matchRoomAnsweredQuestionIdsProvider).any(
+          (element) =>
+              element == matchRoomChat.matchRoomQuestion.matchRoomQuestionId,
+        );
+
     return AnimatedSize(
       duration: const Duration(milliseconds: 200),
       child: Column(
@@ -110,12 +171,12 @@ class _ListTile extends StatelessWidget {
               chatBubbleDecoration: ChatBubbleDecoration.outlined,
             ),
           ),
-          // TODO(tsuda): 時間経過
-          _Message(
-            content: matchRoomChat.matchRoomQuestion.question.answer,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            chatBubbleDecoration: ChatBubbleDecoration.outlined,
-          ),
+          if (showAnswer)
+            _Message(
+              content: matchRoomChat.matchRoomQuestion.question.answer,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              chatBubbleDecoration: ChatBubbleDecoration.outlined,
+            ),
           ...matchRoomChat.userAnswerList.map((userAnswer) {
             return _Message(
               name: userAnswer.user.userName,

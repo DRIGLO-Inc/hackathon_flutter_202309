@@ -20,12 +20,12 @@ class _TimerCounterState extends ConsumerState<TimerCounter> {
 
   @override
   Widget build(BuildContext context) {
-    final count = ref.watch(matchRoomCountProvider).valueOrNull ?? 0;
+    final count = ref.watch(matchRoomCountProvider);
 
-    ref.listen<AsyncValue<int>>(
+    ref.listen<int>(
       matchRoomCountProvider,
       (_, next) {
-        if (next.valueOrNull == 0) {
+        if (next == 0) {
           _durationLinearProgressIndicatorKey.currentState!
             ..overrideValue((_) => 0)
             ..start();
@@ -40,7 +40,7 @@ class _TimerCounterState extends ConsumerState<TimerCounter> {
           Expanded(
             child: DurationLinearProgressIndicator(
               key: _durationLinearProgressIndicatorKey,
-              duration: const Duration(seconds: MatchRoomCount.maxCount),
+              duration: const Duration(seconds: MatchRoomChatCount.maxCount),
               minHeight: 8,
               color: CustomColors.secondaryYellow,
               backgroundColor: CustomColors.grayShade500,
