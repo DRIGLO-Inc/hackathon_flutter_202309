@@ -120,11 +120,11 @@ Left=1700
 Top=200
 Field="部屋ID","部屋ID","uuid","NOT NULL",0,"","",$FFFFFFFF,""
 Field="共有ID","共有ID","text","NOT NULL",,"","",$FFFFFFFF,""
-Field="開始","開始","","NOT NULL",,"","",$FFFFFFFF,""
+Field="開始","開始","boolean","NOT NULL",,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20230930153948
+ModifiedDateTime=20230930155642
 Position="MAIN",1700,200
 ZOrder=17
 
