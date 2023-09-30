@@ -22,6 +22,9 @@ Question _$QuestionFromJson(Map<String, dynamic> json) {
 mixin _$Question {
   String get questionId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  String get answer => throw _privateConstructorUsedError;
+  List<String> get answerTexts => throw _privateConstructorUsedError;
+  Genre get genre => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +37,14 @@ abstract class $QuestionCopyWith<$Res> {
   factory $QuestionCopyWith(Question value, $Res Function(Question) then) =
       _$QuestionCopyWithImpl<$Res, Question>;
   @useResult
-  $Res call({String questionId, String title});
+  $Res call(
+      {String questionId,
+      String title,
+      String answer,
+      List<String> answerTexts,
+      Genre genre});
+
+  $GenreCopyWith<$Res> get genre;
 }
 
 /// @nodoc
@@ -52,6 +62,9 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
   $Res call({
     Object? questionId = null,
     Object? title = null,
+    Object? answer = null,
+    Object? answerTexts = null,
+    Object? genre = null,
   }) {
     return _then(_value.copyWith(
       questionId: null == questionId
@@ -62,7 +75,27 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      answer: null == answer
+          ? _value.answer
+          : answer // ignore: cast_nullable_to_non_nullable
+              as String,
+      answerTexts: null == answerTexts
+          ? _value.answerTexts
+          : answerTexts // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      genre: null == genre
+          ? _value.genre
+          : genre // ignore: cast_nullable_to_non_nullable
+              as Genre,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GenreCopyWith<$Res> get genre {
+    return $GenreCopyWith<$Res>(_value.genre, (value) {
+      return _then(_value.copyWith(genre: value) as $Val);
+    });
   }
 }
 
@@ -73,7 +106,15 @@ abstract class _$$_QuestionCopyWith<$Res> implements $QuestionCopyWith<$Res> {
       __$$_QuestionCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String questionId, String title});
+  $Res call(
+      {String questionId,
+      String title,
+      String answer,
+      List<String> answerTexts,
+      Genre genre});
+
+  @override
+  $GenreCopyWith<$Res> get genre;
 }
 
 /// @nodoc
@@ -89,6 +130,9 @@ class __$$_QuestionCopyWithImpl<$Res>
   $Res call({
     Object? questionId = null,
     Object? title = null,
+    Object? answer = null,
+    Object? answerTexts = null,
+    Object? genre = null,
   }) {
     return _then(_$_Question(
       questionId: null == questionId
@@ -99,6 +143,18 @@ class __$$_QuestionCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      answer: null == answer
+          ? _value.answer
+          : answer // ignore: cast_nullable_to_non_nullable
+              as String,
+      answerTexts: null == answerTexts
+          ? _value._answerTexts
+          : answerTexts // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      genre: null == genre
+          ? _value.genre
+          : genre // ignore: cast_nullable_to_non_nullable
+              as Genre,
     ));
   }
 }
@@ -106,8 +162,14 @@ class __$$_QuestionCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Question extends _Question {
-  const _$_Question({required this.questionId, required this.title})
-      : super._();
+  const _$_Question(
+      {required this.questionId,
+      required this.title,
+      required this.answer,
+      final List<String> answerTexts = const [],
+      required this.genre})
+      : _answerTexts = answerTexts,
+        super._();
 
   factory _$_Question.fromJson(Map<String, dynamic> json) =>
       _$$_QuestionFromJson(json);
@@ -116,10 +178,23 @@ class _$_Question extends _Question {
   final String questionId;
   @override
   final String title;
+  @override
+  final String answer;
+  final List<String> _answerTexts;
+  @override
+  @JsonKey()
+  List<String> get answerTexts {
+    if (_answerTexts is EqualUnmodifiableListView) return _answerTexts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_answerTexts);
+  }
+
+  @override
+  final Genre genre;
 
   @override
   String toString() {
-    return 'Question(questionId: $questionId, title: $title)';
+    return 'Question(questionId: $questionId, title: $title, answer: $answer, answerTexts: $answerTexts, genre: $genre)';
   }
 
   @override
@@ -129,12 +204,17 @@ class _$_Question extends _Question {
             other is _$_Question &&
             (identical(other.questionId, questionId) ||
                 other.questionId == questionId) &&
-            (identical(other.title, title) || other.title == title));
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.answer, answer) || other.answer == answer) &&
+            const DeepCollectionEquality()
+                .equals(other._answerTexts, _answerTexts) &&
+            (identical(other.genre, genre) || other.genre == genre));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, questionId, title);
+  int get hashCode => Object.hash(runtimeType, questionId, title, answer,
+      const DeepCollectionEquality().hash(_answerTexts), genre);
 
   @JsonKey(ignore: true)
   @override
@@ -153,7 +233,10 @@ class _$_Question extends _Question {
 abstract class _Question extends Question {
   const factory _Question(
       {required final String questionId,
-      required final String title}) = _$_Question;
+      required final String title,
+      required final String answer,
+      final List<String> answerTexts,
+      required final Genre genre}) = _$_Question;
   const _Question._() : super._();
 
   factory _Question.fromJson(Map<String, dynamic> json) = _$_Question.fromJson;
@@ -162,6 +245,12 @@ abstract class _Question extends Question {
   String get questionId;
   @override
   String get title;
+  @override
+  String get answer;
+  @override
+  List<String> get answerTexts;
+  @override
+  Genre get genre;
   @override
   @JsonKey(ignore: true)
   _$$_QuestionCopyWith<_$_Question> get copyWith =>

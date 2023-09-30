@@ -20,8 +20,10 @@ MatchRoomQuestion _$MatchRoomQuestionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MatchRoomQuestion {
+  String get matchRoomQuestionId => throw _privateConstructorUsedError;
   String get roomId => throw _privateConstructorUsedError;
-  String get questionId => throw _privateConstructorUsedError;
+  Question get question => throw _privateConstructorUsedError;
+  int get order => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +37,13 @@ abstract class $MatchRoomQuestionCopyWith<$Res> {
           MatchRoomQuestion value, $Res Function(MatchRoomQuestion) then) =
       _$MatchRoomQuestionCopyWithImpl<$Res, MatchRoomQuestion>;
   @useResult
-  $Res call({String roomId, String questionId});
+  $Res call(
+      {String matchRoomQuestionId,
+      String roomId,
+      Question question,
+      int order});
+
+  $QuestionCopyWith<$Res> get question;
 }
 
 /// @nodoc
@@ -51,19 +59,37 @@ class _$MatchRoomQuestionCopyWithImpl<$Res, $Val extends MatchRoomQuestion>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? matchRoomQuestionId = null,
     Object? roomId = null,
-    Object? questionId = null,
+    Object? question = null,
+    Object? order = null,
   }) {
     return _then(_value.copyWith(
+      matchRoomQuestionId: null == matchRoomQuestionId
+          ? _value.matchRoomQuestionId
+          : matchRoomQuestionId // ignore: cast_nullable_to_non_nullable
+              as String,
       roomId: null == roomId
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      questionId: null == questionId
-          ? _value.questionId
-          : questionId // ignore: cast_nullable_to_non_nullable
-              as String,
+      question: null == question
+          ? _value.question
+          : question // ignore: cast_nullable_to_non_nullable
+              as Question,
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $QuestionCopyWith<$Res> get question {
+    return $QuestionCopyWith<$Res>(_value.question, (value) {
+      return _then(_value.copyWith(question: value) as $Val);
+    });
   }
 }
 
@@ -75,7 +101,14 @@ abstract class _$$_MatchRoomQuestionCopyWith<$Res>
       __$$_MatchRoomQuestionCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String roomId, String questionId});
+  $Res call(
+      {String matchRoomQuestionId,
+      String roomId,
+      Question question,
+      int order});
+
+  @override
+  $QuestionCopyWith<$Res> get question;
 }
 
 /// @nodoc
@@ -89,18 +122,28 @@ class __$$_MatchRoomQuestionCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? matchRoomQuestionId = null,
     Object? roomId = null,
-    Object? questionId = null,
+    Object? question = null,
+    Object? order = null,
   }) {
     return _then(_$_MatchRoomQuestion(
+      matchRoomQuestionId: null == matchRoomQuestionId
+          ? _value.matchRoomQuestionId
+          : matchRoomQuestionId // ignore: cast_nullable_to_non_nullable
+              as String,
       roomId: null == roomId
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      questionId: null == questionId
-          ? _value.questionId
-          : questionId // ignore: cast_nullable_to_non_nullable
-              as String,
+      question: null == question
+          ? _value.question
+          : question // ignore: cast_nullable_to_non_nullable
+              as Question,
+      order: null == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -108,20 +151,28 @@ class __$$_MatchRoomQuestionCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MatchRoomQuestion extends _MatchRoomQuestion {
-  const _$_MatchRoomQuestion({required this.roomId, required this.questionId})
+  const _$_MatchRoomQuestion(
+      {required this.matchRoomQuestionId,
+      required this.roomId,
+      required this.question,
+      required this.order})
       : super._();
 
   factory _$_MatchRoomQuestion.fromJson(Map<String, dynamic> json) =>
       _$$_MatchRoomQuestionFromJson(json);
 
   @override
+  final String matchRoomQuestionId;
+  @override
   final String roomId;
   @override
-  final String questionId;
+  final Question question;
+  @override
+  final int order;
 
   @override
   String toString() {
-    return 'MatchRoomQuestion(roomId: $roomId, questionId: $questionId)';
+    return 'MatchRoomQuestion(matchRoomQuestionId: $matchRoomQuestionId, roomId: $roomId, question: $question, order: $order)';
   }
 
   @override
@@ -129,14 +180,18 @@ class _$_MatchRoomQuestion extends _MatchRoomQuestion {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MatchRoomQuestion &&
+            (identical(other.matchRoomQuestionId, matchRoomQuestionId) ||
+                other.matchRoomQuestionId == matchRoomQuestionId) &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
-            (identical(other.questionId, questionId) ||
-                other.questionId == questionId));
+            (identical(other.question, question) ||
+                other.question == question) &&
+            (identical(other.order, order) || other.order == order));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, roomId, questionId);
+  int get hashCode =>
+      Object.hash(runtimeType, matchRoomQuestionId, roomId, question, order);
 
   @JsonKey(ignore: true)
   @override
@@ -155,17 +210,23 @@ class _$_MatchRoomQuestion extends _MatchRoomQuestion {
 
 abstract class _MatchRoomQuestion extends MatchRoomQuestion {
   const factory _MatchRoomQuestion(
-      {required final String roomId,
-      required final String questionId}) = _$_MatchRoomQuestion;
+      {required final String matchRoomQuestionId,
+      required final String roomId,
+      required final Question question,
+      required final int order}) = _$_MatchRoomQuestion;
   const _MatchRoomQuestion._() : super._();
 
   factory _MatchRoomQuestion.fromJson(Map<String, dynamic> json) =
       _$_MatchRoomQuestion.fromJson;
 
   @override
+  String get matchRoomQuestionId;
+  @override
   String get roomId;
   @override
-  String get questionId;
+  Question get question;
+  @override
+  int get order;
   @override
   @JsonKey(ignore: true)
   _$$_MatchRoomQuestionCopyWith<_$_MatchRoomQuestion> get copyWith =>

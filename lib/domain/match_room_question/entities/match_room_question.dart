@@ -2,14 +2,18 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../question/entities/question.dart';
+
 part 'match_room_question.freezed.dart';
 part 'match_room_question.g.dart';
 
 @freezed
 class MatchRoomQuestion with _$MatchRoomQuestion {
   const factory MatchRoomQuestion({
+    required String matchRoomQuestionId,
     required String roomId,
-    required String questionId,
+    required Question question,
+    required int order,
   }) = _MatchRoomQuestion;
 
   const MatchRoomQuestion._();
