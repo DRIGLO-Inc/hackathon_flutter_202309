@@ -55,6 +55,9 @@ dependencies:
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1
 
+  # uuid
+  uuid: ^3.0.7
+
   # others
   flutter_keyboard_visibility: ^5.4.1
 

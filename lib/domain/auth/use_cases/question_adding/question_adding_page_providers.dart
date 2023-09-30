@@ -33,7 +33,6 @@ class EditingQuestionUuIdsNotifier extends AutoDisposeNotifier<List<String>> {
   }
 
   void removeQuestion(String uuid) {
-    state.remove(uuid);
-    state = [...state];
+    state = state.map((e) => e == uuid ? null : e).nonNulls.toList();
   }
 }
