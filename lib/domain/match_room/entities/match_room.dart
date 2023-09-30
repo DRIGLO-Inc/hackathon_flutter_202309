@@ -8,7 +8,8 @@ part 'match_room.g.dart';
 @freezed
 class MatchRoom with _$MatchRoom {
   const factory MatchRoom({
-    required String roomId,
+    required String matchRoomId,
+    required String ownerId,
     required String invitationId,
     required bool isStart,
   }) = _MatchRoom;
