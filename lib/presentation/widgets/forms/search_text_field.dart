@@ -11,6 +11,7 @@ class SearchTextField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.zero,
         prefixIcon: const Icon(Icons.search),
         border: const OutlineInputBorder(
           borderSide: BorderSide.none,

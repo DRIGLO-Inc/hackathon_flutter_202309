@@ -1,17 +1,21 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/auth/use_cases/current_app_user/current_app_user_notifier.dart';
 import '../../../domain/auth/use_cases/sign_up/sign_up.dart';
+import '../../../gen/assets.gen.dart';
 import '../../../utils/extensions/navigator_state_ex.dart';
-import '../../widgets/buttons/obscure_text_switcher_button.dart';
-import '../../widgets/buttons/theme_switcher_button.dart';
+import '../../../utils/extensions/text_style_ex.dart';
+import '../../theme/color/custom_colors.dart';
+import '../../theme/typography/typography.dart';
+import '../../widgets/buttons/rounded_button.dart';
+import '../../widgets/forms/rounded_rectangle_text_from.dart';
 import '../../widgets/snack_bars/floating_snack_bar.dart';
 import '../../widgets/unfocus_gesture_detector.dart';
-import '../auth_sign_in/auth_sign_in_page.dart';
 import '../main/main_page.dart';
 
 class AuthSignUpPageArgs extends Equatable {
@@ -48,8 +52,6 @@ class _AuthSignUpPageState extends ConsumerState<AuthSignUpPage> {
   late final _passwordTextController =
       TextEditingController(text: widget.args.password);
 
-  var _obscurePassword = true;
-
   Future<void> _onPressed() async {
     try {
       await ref.read(signUpProvider)(
@@ -63,82 +65,123 @@ class _AuthSignUpPageState extends ConsumerState<AuthSignUpPage> {
     } on Exception catch (_) {
       if (mounted) {
         // TODO(tsuda): エラーの種類によって、メッセージを出し分ける
-        FloatingSnackBar.showError(context, message: 'サインインに失敗しました');
+        FloatingSnackBar.showError(context, message: '新規登録に失敗しました');
       }
     }
+  }
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    _passwordTextController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return UnfocusGestureDetector(
       child: Scaffold(
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
+        appBar: AppBar(
+          title: Text(
+            '新規登録',
+            style: customTextTheme.body5.w6.copyWith(
+              color: CustomColors.grayShade1000,
             ),
-            child: Stack(
-              children: [
-                const Positioned(
-                  top: 16,
-                  right: 0,
-                  child: ThemeSwitcherButton(),
+          ),
+          backgroundColor: CustomColors.grayShade0,
+          centerTitle: true,
+        ),
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (_, constraints) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
                 ),
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextFormField(
-                        controller: _emailTextController,
-                        keyboardType: TextInputType.emailAddress,
-                        autofillHints: const [AutofillHints.email],
-                        decoration: const InputDecoration(
-                          label: Text('Email'),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          'テストの時間へようこそ',
+                          style: customTextTheme.body2.w6,
                         ),
-                        textInputAction: TextInputAction.next,
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _passwordTextController,
-                        autofillHints: const [AutofillHints.newPassword],
-                        decoration: InputDecoration(
-                          label: const Text('Password'),
-                          suffixIcon: ObscureTextSwitcherButton(
-                            obscure: _obscurePassword,
-                            onChanged: (value) => setState(() {
-                              _obscurePassword = value;
-                            }),
-                          ),
+                        const SizedBox(height: 24),
+                        SizedBox(
+                          height: 176,
+                          width: 200,
+                          child: Assets.images.png.mainImage.image(),
                         ),
-                        obscureText: _obscurePassword,
-                        onFieldSubmitted: (_) {
-                          _onPressed();
-                        },
-                      ),
-                      const SizedBox(height: 24),
-                      FilledButton(
-                        onPressed: _onPressed,
-                        child: const Text('登録'),
-                      ),
-                      const SizedBox(height: 24),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).replace(
-                            oldRoute: ModalRoute.of(context)!,
-                            newRoute: AuthSignInPage.route(
-                              AuthSignInPageArgs(
-                                email: _emailTextController.text,
-                                password: _passwordTextController.text,
+                        const SizedBox(height: 24),
+                        RoundedRectangleTextForm(
+                          controller: _emailTextController,
+                          hintText: 'メールアドレスを入力',
+                        ),
+                        const SizedBox(height: 16),
+                        RoundedRectangleTextForm(
+                          controller: _passwordTextController,
+                          hintText: 'パスワードを入力',
+                          showObscureTextIcon: true,
+                        ),
+                        const SizedBox(height: 24),
+                        Text.rich(
+                          TextSpan(
+                            text: '新規登録またはログインすることで',
+                            children: [
+                              TextSpan(
+                                text: '利用規約',
+                                style: customTextTheme.caption1
+                                    .copyWith(color: CustomColors.accentBlue),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {},
+                                mouseCursor: SystemMouseCursors.precise,
                               ),
-                            ),
-                          );
-                        },
-                        child: const Text('アカウントをすでにお持ちの方'),
-                      ),
-                    ],
+                              TextSpan(
+                                text: 'に同意いただいたものとします。',
+                                style: customTextTheme.caption1,
+                              ),
+                            ],
+                          ),
+                          style: customTextTheme.caption1,
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor,
+                        ),
+                        const SizedBox(height: 24),
+                        RoundedButton(
+                          height: 48,
+                          width: constraints.maxWidth,
+                          onTap: _onPressed,
+                          child: const Text('新規登録する'),
+                        ),
+                        const SizedBox(height: 24),
+                        Text.rich(
+                          TextSpan(
+                            text: 'すでに登録済みの方は',
+                            children: [
+                              TextSpan(
+                                text: 'ログイン',
+                                style: customTextTheme.caption1.w6
+                                    .copyWith(color: CustomColors.accentBlue),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = Navigator.of(context).pop,
+                                mouseCursor: SystemMouseCursors.precise,
+                              ),
+                              TextSpan(
+                                text: 'する',
+                                style: customTextTheme.caption1.w6,
+                              ),
+                            ],
+                          ),
+                          style: customTextTheme.caption1.w6,
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ),

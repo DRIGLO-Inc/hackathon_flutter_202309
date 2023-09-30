@@ -83,9 +83,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  # assets:
-    # - assets/images/png
-    # - assets/images/svg
+  assets:
+    - assets/images/png/
+    - assets/images/svg/
 
 flutter_gen:
   output: lib/gen/
