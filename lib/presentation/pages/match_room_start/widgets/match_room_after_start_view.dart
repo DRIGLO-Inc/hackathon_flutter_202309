@@ -37,7 +37,7 @@ class MatchRoomAfterStartView extends StatelessWidget {
                       padding: EdgeInsets.only(
                         top: 12,
                       ),
-                      child: TimerCounter(counter: 10),
+                      child: TimerCounter(),
                     ),
                   ),
                 ],
@@ -97,46 +97,48 @@ class _ListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: _Message(
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 200),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: _Message(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              name: '${matchRoomChat.matchRoomQuestion.order}個目の質問',
+              content: matchRoomChat.matchRoomQuestion.question.title,
+              chatBubbleDecoration: ChatBubbleDecoration.outlined,
+            ),
+          ),
+          // TODO(tsuda): 時間経過
+          _Message(
+            content: matchRoomChat.matchRoomQuestion.question.answer,
             crossAxisAlignment: CrossAxisAlignment.start,
-            name: '${matchRoomChat.matchRoomQuestion.order}個目の質問',
-            content: matchRoomChat.matchRoomQuestion.question.title,
             chatBubbleDecoration: ChatBubbleDecoration.outlined,
           ),
-        ),
-        // TODO(tsuda): 時間経過
-        _Message(
-          name: matchRoomChat.matchRoomQuestion.question.answer,
-          content: matchRoomChat.matchRoomQuestion.question.answer,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          chatBubbleDecoration: ChatBubbleDecoration.outlined,
-        ),
-        ...matchRoomChat.userAnswerList.map((userAnswer) {
-          return _Message(
-            name: userAnswer.user.userName,
-            content: userAnswer.answer,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            chatBubbleDecoration: ChatBubbleDecoration.filledPrimary,
-          );
-        }),
-      ],
+          ...matchRoomChat.userAnswerList.map((userAnswer) {
+            return _Message(
+              name: userAnswer.user.userName,
+              content: userAnswer.answer,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              chatBubbleDecoration: ChatBubbleDecoration.filledPrimary,
+            );
+          }),
+        ],
+      ),
     );
   }
 }
 
 class _Message extends StatelessWidget {
   const _Message({
-    required this.name,
+    this.name,
     required this.content,
     required this.crossAxisAlignment,
     required this.chatBubbleDecoration,
   });
 
-  final String name;
+  final String? name;
   final String content;
   final CrossAxisAlignment crossAxisAlignment;
   final ChatBubbleDecoration chatBubbleDecoration;
@@ -150,11 +152,13 @@ class _Message extends StatelessWidget {
         child: Column(
           crossAxisAlignment: crossAxisAlignment,
           children: [
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
+            if (name case final name?) ...[
+              Text(
+                name,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 4),
+            ],
             ChatBubble(
               text: content,
               decoration: chatBubbleDecoration,

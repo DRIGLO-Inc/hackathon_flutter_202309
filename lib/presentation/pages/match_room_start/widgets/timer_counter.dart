@@ -1,29 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../domain/match_room_chat/use_cases/match_room_chat_count.dart';
 import '../../../../utils/extensions/text_style_ex.dart';
 import '../../../theme/color/custom_colors.dart';
 import '../../../theme/typography/typography.dart';
+import '../../../widgets/duration_linear_progress_indicator.dart';
 
-class TimerCounter extends ConsumerWidget {
-  const TimerCounter({super.key, required this.counter});
-
-  final int counter;
+class TimerCounter extends ConsumerStatefulWidget {
+  const TimerCounter({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TimerCounter> createState() => _TimerCounterState();
+}
+
+class _TimerCounterState extends ConsumerState<TimerCounter> {
+  final _durationLinearProgressIndicatorKey =
+      GlobalKey<DurationLinearProgressIndicatorState>();
+
+  @override
+  Widget build(BuildContext context) {
+    final count = ref.watch(matchRoomCountProvider).valueOrNull ?? 0;
+
+    ref.listen<AsyncValue<int>>(
+      matchRoomCountProvider,
+      (_, next) {
+        if (next.valueOrNull == 0) {
+          _durationLinearProgressIndicatorKey.currentState!
+            ..overrideValue((_) => 0)
+            ..start();
+        }
+      },
+    );
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          const Expanded(
-            child: LinearProgressIndicator(
-              // TODO(Tani1015): counterの値を使って、残り時間を表現する
-              value: 0.3,
+          Expanded(
+            child: DurationLinearProgressIndicator(
+              key: _durationLinearProgressIndicatorKey,
+              duration: const Duration(seconds: MatchRoomCount.maxCount),
               minHeight: 8,
               color: CustomColors.secondaryYellow,
               backgroundColor: CustomColors.grayShade500,
-              borderRadius: BorderRadius.all(Radius.circular(32)),
             ),
           ),
           const SizedBox(width: 12),
@@ -36,7 +56,7 @@ class TimerCounter extends ConsumerWidget {
               dimension: 48,
               child: Center(
                 child: Text(
-                  counter.toString(),
+                  count.toString(),
                   style: customTextTheme.caption2.w6,
                 ),
               ),
