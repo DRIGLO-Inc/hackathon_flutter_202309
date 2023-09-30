@@ -7,6 +7,7 @@ import '../../../../utils/extensions/navigator_state_ex.dart';
 import '../../../providers/theme_switcher_notifier.dart';
 import '../../../widgets/buttons/theme_switcher_button.dart';
 import '../../../widgets/snack_bars/floating_snack_bar.dart';
+import '../../_mock_chat_room/_mock_chat_room.dart';
 import '../../auth_sign_in/auth_sign_in_page.dart';
 
 class MainPageDrawer extends ConsumerWidget {
@@ -56,6 +57,18 @@ class MainPageDrawer extends ConsumerWidget {
                       onPressed: signOut,
                       child: const Text('ログアウト'),
                     ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12,
+                    ),
+                    child: Text('開発用'),
+                  ),
+                  ListTile(
+                    title: const Text('チャットルーム'),
+                    onTap: () {
+                      Navigator.of(context).push(MockChatRoom.route());
+                    },
                   ),
                 ],
               ),
