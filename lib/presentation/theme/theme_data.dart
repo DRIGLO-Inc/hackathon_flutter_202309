@@ -47,6 +47,6 @@ class AppThemeData {
   }
 
   static ThemeData get dark {
-    return _base(colorScheme: AppColorScheme.dark);
+    return _base(colorScheme: AppColorScheme.light);
   }
 }

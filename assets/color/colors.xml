@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+  <color name="white">#FFFFFF</color>
+  <color name="gray100">#EEEEEE</color>
+  <color name="gray200">#DDDDDD</color>
+  <color name="gray300">#BBBBBB</color>
+  <color name="gray500">#888888</color>
+  <color name="gray700">#333333</color>
+  <color name="black">#000000</color>
+  <color name="green_primary">#69D4C1</color>
+  <color name="blue_secondary">#7FB0EA</color>
+  <color name="yellow_secondary">#FEEC86</color>
+  <color name="orange_accent">#FF9B04</color>
+  <color name="red_accent">#FF0404</color>
+  <color name="blue_accent">#04A5FF</color>
+</resources>
