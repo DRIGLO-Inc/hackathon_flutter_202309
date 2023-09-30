@@ -22,6 +22,7 @@ MatchRoom _$MatchRoomFromJson(Map<String, dynamic> json) {
 mixin _$MatchRoom {
   String get roomId => throw _privateConstructorUsedError;
   String get invitationId => throw _privateConstructorUsedError;
+  bool get isStart => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $MatchRoomCopyWith<$Res> {
   factory $MatchRoomCopyWith(MatchRoom value, $Res Function(MatchRoom) then) =
       _$MatchRoomCopyWithImpl<$Res, MatchRoom>;
   @useResult
-  $Res call({String roomId, String invitationId});
+  $Res call({String roomId, String invitationId, bool isStart});
 }
 
 /// @nodoc
@@ -52,6 +53,7 @@ class _$MatchRoomCopyWithImpl<$Res, $Val extends MatchRoom>
   $Res call({
     Object? roomId = null,
     Object? invitationId = null,
+    Object? isStart = null,
   }) {
     return _then(_value.copyWith(
       roomId: null == roomId
@@ -62,6 +64,10 @@ class _$MatchRoomCopyWithImpl<$Res, $Val extends MatchRoom>
           ? _value.invitationId
           : invitationId // ignore: cast_nullable_to_non_nullable
               as String,
+      isStart: null == isStart
+          ? _value.isStart
+          : isStart // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -73,7 +79,7 @@ abstract class _$$_MatchRoomCopyWith<$Res> implements $MatchRoomCopyWith<$Res> {
       __$$_MatchRoomCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String roomId, String invitationId});
+  $Res call({String roomId, String invitationId, bool isStart});
 }
 
 /// @nodoc
@@ -89,6 +95,7 @@ class __$$_MatchRoomCopyWithImpl<$Res>
   $Res call({
     Object? roomId = null,
     Object? invitationId = null,
+    Object? isStart = null,
   }) {
     return _then(_$_MatchRoom(
       roomId: null == roomId
@@ -99,6 +106,10 @@ class __$$_MatchRoomCopyWithImpl<$Res>
           ? _value.invitationId
           : invitationId // ignore: cast_nullable_to_non_nullable
               as String,
+      isStart: null == isStart
+          ? _value.isStart
+          : isStart // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -106,7 +117,8 @@ class __$$_MatchRoomCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MatchRoom extends _MatchRoom {
-  const _$_MatchRoom({required this.roomId, required this.invitationId})
+  const _$_MatchRoom(
+      {required this.roomId, required this.invitationId, required this.isStart})
       : super._();
 
   factory _$_MatchRoom.fromJson(Map<String, dynamic> json) =>
@@ -116,10 +128,12 @@ class _$_MatchRoom extends _MatchRoom {
   final String roomId;
   @override
   final String invitationId;
+  @override
+  final bool isStart;
 
   @override
   String toString() {
-    return 'MatchRoom(roomId: $roomId, invitationId: $invitationId)';
+    return 'MatchRoom(roomId: $roomId, invitationId: $invitationId, isStart: $isStart)';
   }
 
   @override
@@ -129,12 +143,13 @@ class _$_MatchRoom extends _MatchRoom {
             other is _$_MatchRoom &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
             (identical(other.invitationId, invitationId) ||
-                other.invitationId == invitationId));
+                other.invitationId == invitationId) &&
+            (identical(other.isStart, isStart) || other.isStart == isStart));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, roomId, invitationId);
+  int get hashCode => Object.hash(runtimeType, roomId, invitationId, isStart);
 
   @JsonKey(ignore: true)
   @override
@@ -153,7 +168,8 @@ class _$_MatchRoom extends _MatchRoom {
 abstract class _MatchRoom extends MatchRoom {
   const factory _MatchRoom(
       {required final String roomId,
-      required final String invitationId}) = _$_MatchRoom;
+      required final String invitationId,
+      required final bool isStart}) = _$_MatchRoom;
   const _MatchRoom._() : super._();
 
   factory _MatchRoom.fromJson(Map<String, dynamic> json) =
@@ -163,6 +179,8 @@ abstract class _MatchRoom extends MatchRoom {
   String get roomId;
   @override
   String get invitationId;
+  @override
+  bool get isStart;
   @override
   @JsonKey(ignore: true)
   _$$_MatchRoomCopyWith<_$_MatchRoom> get copyWith =>

@@ -10,6 +10,7 @@ class MatchRoom with _$MatchRoom {
   const factory MatchRoom({
     required String roomId,
     required String invitationId,
+    required bool isStart,
   }) = _MatchRoom;
 
   const MatchRoom._();

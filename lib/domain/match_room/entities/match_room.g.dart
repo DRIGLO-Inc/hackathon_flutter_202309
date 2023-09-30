@@ -9,10 +9,12 @@ part of 'match_room.dart';
 _$_MatchRoom _$$_MatchRoomFromJson(Map<String, dynamic> json) => _$_MatchRoom(
       roomId: json['roomId'] as String,
       invitationId: json['invitationId'] as String,
+      isStart: json['isStart'] as bool,
     );
 
 Map<String, dynamic> _$$_MatchRoomToJson(_$_MatchRoom instance) =>
     <String, dynamic>{
       'roomId': instance.roomId,
       'invitationId': instance.invitationId,
+      'isStart': instance.isStart,
     };

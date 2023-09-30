@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../widgets/forms/search_text_field.dart';
 import 'widgets/drawer.dart';
 
 class MainPage extends ConsumerWidget {
@@ -22,7 +23,13 @@ class MainPage extends ConsumerWidget {
         title: const Text('Main'),
       ),
       drawer: const MainPageDrawer(),
-      body: const Center(child: Text('MainPage')),
+      body: const CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: SearchTextField(),
+          ),
+        ],
+      ),
     );
   }
 }
