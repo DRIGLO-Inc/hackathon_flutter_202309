@@ -9,7 +9,6 @@ import '../../../widgets/buttons/theme_switcher_button.dart';
 import '../../../widgets/snack_bars/floating_snack_bar.dart';
 import '../../auth_sign_in/auth_sign_in_page.dart';
 import '../../chat_answer/chat_answer_page.dart';
-import '../../match_room_start/widgets/chat_answer_app_bar.dart';
 
 class MainPageDrawer extends ConsumerWidget {
   const MainPageDrawer({super.key});

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import '../../../../utils/extensions/build_context_ex.dart';
 import '../../../widgets/form/rounded_rectangle_text_from.dart';
 import 'chat_answer_app_bar.dart';
-import 'timer_counter.dart';
 import 'chat_bubble.dart';
+import 'timer_counter.dart';
 
 class MatchRoomAfterStartView extends StatelessWidget {
   const MatchRoomAfterStartView({super.key});
@@ -15,7 +16,7 @@ class MatchRoomAfterStartView extends StatelessWidget {
     return GestureDetector(
       onTap: context.unfocus,
       child: Scaffold(
-        // TODO: ジャンル名を取得する。
+        // TODO(Tani1025): ジャンル名を取得する。
         appBar: const ChatAnswerAppBar(
           child: Text(
             'ジャンル名がここに入る長い場合はellipsisにする',
@@ -27,7 +28,7 @@ class MatchRoomAfterStartView extends StatelessWidget {
           children: [
             const Align(
               alignment: Alignment.topRight,
-              // TODO: stateに変更する
+              // TODO(Tani1025): stateに変更する
               child: Padding(
                 padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
                 child: TimerCounter(counter: 10),
