@@ -22,5 +22,5 @@ class CustomColors {
   static const accentOrange = ColorName.orangeAccent;
   static const accentRed = ColorName.redAccent;
   static const accentBlue = ColorName.blueAccent;
-  static const accentGreen = ColorName.greenAccent;
+  static const accentGreen = ColorName.greenLight;
 }

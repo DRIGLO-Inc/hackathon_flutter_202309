@@ -33,7 +33,7 @@ class ChatAnswerAppBar extends PreferredSize {
                     color: CustomColors.accentGreen,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(16),
+                    padding: EdgeInsets.all(12),
                     child: Icon(
                       Icons.edit,
                       color: ColorName.white,
@@ -59,7 +59,7 @@ class ChatAnswerAppBar extends PreferredSize {
                   ),
                 ),
                 IconButton(
-                  onPressed: Navigator.of(context).pop,
+                  onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(Icons.close),
                 ),
               ],

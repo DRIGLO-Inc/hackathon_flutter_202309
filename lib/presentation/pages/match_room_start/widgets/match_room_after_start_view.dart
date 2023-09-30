@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../utils/extensions/build_context_ex.dart';
+import '../../../../domain/match_room_chat/entities/match_room_chat.dart';
+import '../../../../domain/match_room_chat/use_cases/match_room_chat_notifier.dart';
 import '../../../widgets/form/rounded_rectangle_text_from.dart';
+import '../../../widgets/unfocus_gesture_detector.dart';
 import 'chat_answer_app_bar.dart';
 import 'chat_bubble.dart';
 import 'timer_counter.dart';
@@ -13,43 +16,45 @@ class MatchRoomAfterStartView extends StatelessWidget {
   Widget build(BuildContext context) {
     final chatController = TextEditingController();
 
-    return GestureDetector(
-      onTap: context.unfocus,
+    return UnfocusGestureDetector(
       child: Scaffold(
-        // TODO(Tani1025): ジャンル名を取得する。
         appBar: const ChatAnswerAppBar(
           child: Text(
+            // TODO(Tani1025): ジャンル名を取得する。
             'ジャンル名がここに入る長い場合はellipsisにする',
             style: TextStyle(fontWeight: FontWeight.bold),
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        body: Stack(
+        body: Column(
           children: [
-            const Align(
-              alignment: Alignment.topRight,
-              // TODO(Tani1025): stateに変更する
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
-                child: TimerCounter(counter: 10),
+            Expanded(
+              child: Stack(
+                children: [
+                  _Body(),
+                  const Positioned(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: 12,
+                      ),
+                      child: TimerCounter(counter: 10),
+                    ),
+                  ),
+                ],
               ),
             ),
-            _Body(),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  16,
-                  0,
-                  16,
-                  MediaQuery.paddingOf(context).bottom + 16,
-                ),
-                child: RoundedRectangleTextForm(
-                  controller: chatController,
-                  minLines: 1,
-                  maxLines: 8,
-                  textHeight: 1.3,
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ) +
+                  EdgeInsets.only(
+                    bottom: MediaQuery.paddingOf(context).bottom + 16,
+                  ),
+              child: RoundedRectangleTextForm(
+                controller: chatController,
+                minLines: 1,
+                maxLines: 8,
+                textHeight: 1.3,
               ),
             ),
           ],
@@ -59,68 +64,104 @@ class MatchRoomAfterStartView extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final list = ref.watch(matchRoomChatListNotifier).value ?? [];
+
     return CustomScrollView(
+      reverse: true,
       slivers: [
-        const SliverToBoxAdapter(
-          child: SizedBox(height: 64),
-        ),
-        // TODO(Tani1015): mockに変更
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
           sliver: SliverList.separated(
             separatorBuilder: (_, index) => const SizedBox(height: 8),
-            itemCount: 2,
+            itemCount: list.length,
             itemBuilder: (_, index) {
-              // TODO(Tani1015): チャットのユーザが自分か相手かを判定
-              if (index == 0) {
-                return const FractionallySizedBox(
-                  alignment: Alignment.centerLeft,
-                  widthFactor: 0.8,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '?問目の問題',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 4),
-                      ChatBubble(
-                        text: 'こんにちはこんにちはこんにちはこんにちはこんにちはこんにちは',
-                        isMe: false,
-                      ),
-                    ],
-                  ),
-                );
-              }
-              // TODO(Tani1015): チャットのユーザが自分か相手かを判定
-              if (index == 1) {
-                return const FractionallySizedBox(
-                  alignment: Alignment.centerRight,
-                  widthFactor: 0.8,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        'ユーザ名1',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 4),
-                      ChatBubble(
-                        text: 'こんにちは',
-                        isMe: true,
-                      ),
-                    ],
-                  ),
-                );
-              }
-              return const SizedBox.shrink();
+              return _ListTile(matchRoomChat: list.reversed.toList()[index]);
             },
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ListTile extends StatelessWidget {
+  const _ListTile({required this.matchRoomChat});
+
+  final MatchRoomChat matchRoomChat;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: _Message(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            name: '${matchRoomChat.matchRoomQuestion.order}個目の質問',
+            content: matchRoomChat.matchRoomQuestion.question.title,
+            chatBubbleDecoration: ChatBubbleDecoration.outlined,
+          ),
+        ),
+        // TODO(tsuda): 時間経過
+        _Message(
+          name: matchRoomChat.matchRoomQuestion.question.answer,
+          content: matchRoomChat.matchRoomQuestion.question.answer,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          chatBubbleDecoration: ChatBubbleDecoration.outlined,
+        ),
+        ...matchRoomChat.userAnswerList.map((userAnswer) {
+          return _Message(
+            name: userAnswer.user.userName,
+            content: userAnswer.answer,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            chatBubbleDecoration: ChatBubbleDecoration.filledPrimary,
+          );
+        }),
+      ],
+    );
+  }
+}
+
+class _Message extends StatelessWidget {
+  const _Message({
+    required this.name,
+    required this.content,
+    required this.crossAxisAlignment,
+    required this.chatBubbleDecoration,
+  });
+
+  final String name;
+  final String content;
+  final CrossAxisAlignment crossAxisAlignment;
+  final ChatBubbleDecoration chatBubbleDecoration;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: crossAxisAlignment,
+          children: [
+            Text(
+              name,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            ChatBubble(
+              text: content,
+              decoration: chatBubbleDecoration,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

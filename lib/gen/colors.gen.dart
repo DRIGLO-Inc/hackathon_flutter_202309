@@ -37,6 +37,9 @@ class ColorName {
   /// Color: #333333
   static const Color gray700 = Color(0xFF333333);
 
+  /// Color: #9BEFB8
+  static const Color greenLight = Color(0xFF9BEFB8);
+
   /// Color: #69D4C1
   static const Color greenPrimary = Color(0xFF69D4C1);
 
@@ -51,7 +54,4 @@ class ColorName {
 
   /// Color: #FEEC86
   static const Color yellowSecondary = Color(0xFFFEEC86);
-
-  /// Color: #9BEFB8
-  static const Color greenAccent = Color(0xFF9BEFB8);
 }
