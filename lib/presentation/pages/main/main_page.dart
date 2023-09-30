@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../widgets/forms/search_text_field.dart';
+import '../match_room_select/match_room_select_page.dart';
 import 'widgets/drawer.dart';
 
 class MainPage extends ConsumerWidget {
@@ -23,6 +24,12 @@ class MainPage extends ConsumerWidget {
         title: const Text('Main'),
       ),
       drawer: const MainPageDrawer(),
+      floatingActionButton: FloatingActionButton(
+        child: const Text('作る'),
+        onPressed: () {
+          Navigator.of(context).push(MatchRoomSelectPage.route());
+        },
+      ),
       body: const CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
