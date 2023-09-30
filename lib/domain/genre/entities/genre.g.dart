@@ -7,11 +7,11 @@ part of 'genre.dart';
 // **************************************************************************
 
 _$_Genre _$$_GenreFromJson(Map<String, dynamic> json) => _$_Genre(
-      genreId: json['genreId'] as String,
-      genreName: json['genreName'] as String,
+      genreId: json['genre_id'] as String,
+      genreName: json['genre_name'] as String,
     );
 
 Map<String, dynamic> _$$_GenreToJson(_$_Genre instance) => <String, dynamic>{
-      'genreId': instance.genreId,
-      'genreName': instance.genreName,
+      'genre_id': instance.genreId,
+      'genre_name': instance.genreName,
     };

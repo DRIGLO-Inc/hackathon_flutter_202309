@@ -8,13 +8,13 @@ part of 'match_room_question.dart';
 
 _$_MatchRoomQuestion _$$_MatchRoomQuestionFromJson(Map<String, dynamic> json) =>
     _$_MatchRoomQuestion(
-      roomId: json['roomId'] as String,
-      questionId: json['questionId'] as String,
+      roomId: json['room_id'] as String,
+      questionId: json['question_id'] as String,
     );
 
 Map<String, dynamic> _$$_MatchRoomQuestionToJson(
         _$_MatchRoomQuestion instance) =>
     <String, dynamic>{
-      'roomId': instance.roomId,
-      'questionId': instance.questionId,
+      'room_id': instance.roomId,
+      'question_id': instance.questionId,
     };

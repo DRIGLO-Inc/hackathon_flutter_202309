@@ -7,17 +7,17 @@ part of 'answer.dart';
 // **************************************************************************
 
 _$_Answer _$$_AnswerFromJson(Map<String, dynamic> json) => _$_Answer(
-      userId: json['userId'] as String,
-      isCorrect: json['isCorrect'] as bool,
+      userId: json['user_id'] as String,
+      isCorrect: json['is_correct'] as bool,
       durationTakenToAnswer: _$JsonConverterFromJson<int, Duration>(
-          json['durationTakenToAnswer'],
+          json['duration_taken_to_answer'],
           const SecondsDurationConverter().fromJson),
     );
 
 Map<String, dynamic> _$$_AnswerToJson(_$_Answer instance) => <String, dynamic>{
-      'userId': instance.userId,
-      'isCorrect': instance.isCorrect,
-      'durationTakenToAnswer': _$JsonConverterToJson<int, Duration>(
+      'user_id': instance.userId,
+      'is_correct': instance.isCorrect,
+      'duration_taken_to_answer': _$JsonConverterToJson<int, Duration>(
           instance.durationTakenToAnswer,
           const SecondsDurationConverter().toJson),
     };

@@ -7,12 +7,12 @@ part of 'question.dart';
 // **************************************************************************
 
 _$_Question _$$_QuestionFromJson(Map<String, dynamic> json) => _$_Question(
-      questionId: json['questionId'] as String,
+      questionId: json['question_id'] as String,
       title: json['title'] as String,
     );
 
 Map<String, dynamic> _$$_QuestionToJson(_$_Question instance) =>
     <String, dynamic>{
-      'questionId': instance.questionId,
+      'question_id': instance.questionId,
       'title': instance.title,
     };
