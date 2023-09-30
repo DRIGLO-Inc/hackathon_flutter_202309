@@ -120,12 +120,12 @@ Page=MAIN
 Left=1950
 Top=200
 Field="部屋ID","match_room_id","uuid","NOT NULL",0,"","",$FFFFFFFF,""
-Field="共有ID","share_id","text","NOT NULL",,"","",$FFFFFFFF,""
+Field="招待ID","invitation_id","text","NOT NULL",,"","",$FFFFFFFF,""
 Field="開始したか","is_start","boolean","NOT NULL",,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20230930162605
+ModifiedDateTime=20230930163222
 Position="MAIN",1950,200
 ZOrder=17
 
