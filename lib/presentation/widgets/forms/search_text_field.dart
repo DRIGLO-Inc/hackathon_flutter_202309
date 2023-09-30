@@ -13,6 +13,7 @@ class SearchTextField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.search),
         border: const OutlineInputBorder(
+          borderSide: BorderSide.none,
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         hintText: hintText,

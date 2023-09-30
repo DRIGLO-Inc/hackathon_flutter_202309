@@ -24,16 +24,26 @@ class MainPage extends ConsumerWidget {
         title: const Text('Main'),
       ),
       drawer: const MainPageDrawer(),
-      floatingActionButton: FloatingActionButton(
-        child: const Text('作る'),
+      floatingActionButton: FloatingActionButton.large(
+        child: const Text('テストを\nつくる'),
         onPressed: () {
-          Navigator.of(context).push(MatchRoomSelectPage.route());
+          Navigator.of(context).push(
+            MatchRoomSelectPage.route(),
+          );
         },
       ),
       body: const CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: SearchTextField(),
+            child: SizedBox(height: 24),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 16,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: SearchTextField(),
+            ),
           ),
         ],
       ),
