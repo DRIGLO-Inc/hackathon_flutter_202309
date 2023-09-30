@@ -51,4 +51,7 @@ class ColorName {
 
   /// Color: #FEEC86
   static const Color yellowSecondary = Color(0xFFFEEC86);
+
+  /// Color: #9BEFB8
+  static const Color greenAccent = Color(0xFF9BEFB8);
 }
