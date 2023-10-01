@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../gen/assets.gen.dart';
@@ -13,10 +12,10 @@ class SliverHeaderImage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SliverPersistentHeader(
       delegate: _CustomSliverHeaderDelegate(
-        maxHeight: 240,
-        minHeight: 240,
+        maxHeight: 300,
+        minHeight: 300,
         child: Assets.images.png.mainHeaderImage.image(
-          fit: BoxFit.cover,
+          fit: BoxFit.fitWidth,
         ),
       ),
     );
@@ -45,7 +44,21 @@ class _CustomSliverHeaderDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return SizedBox.expand(child: child);
+    return Stack(
+      children: [
+        Positioned.fill(child: child),
+        Positioned(
+          top: MediaQuery.paddingOf(context).top,
+          left: 8,
+          child: IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: const Icon(Icons.menu),
+          ),
+        ),
+      ],
+    );
   }
 
   @override

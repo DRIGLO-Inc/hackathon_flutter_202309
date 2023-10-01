@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/auth/use_cases/sign_out/sign_out.dart';
-import '../../../utils/extensions/navigator_state_ex.dart';
 import '../../../utils/extensions/text_style_ex.dart';
 import '../../theme/typography/typography.dart';
 import '../../widgets/forms/search_text_field.dart';
 import '../../widgets/unfocus_gesture_detector.dart';
-import '../auth_sign_in/auth_sign_in_page.dart';
 import '../question_adding_genre_selecting_page/question_adding_genre_selecting_page.dart';
+import 'widgets/drawer.dart';
 import 'widgets/select_genre_card_list.dart';
 import 'widgets/select_room_card_list.dart';
 import 'widgets/sliver_header_image.dart';
@@ -38,6 +36,7 @@ class MainPage extends ConsumerWidget {
           },
           child: Text('テストを\nつくる', style: customTextTheme.body5.w6),
         ),
+        drawer: const MainPageDrawer(),
         body: CustomScrollView(
           slivers: [
             const SliverHeaderImage(),

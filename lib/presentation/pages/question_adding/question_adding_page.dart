@@ -5,7 +5,6 @@ import '../../../domain/auth/use_cases/question_adding/question_adding_page_prov
 import '../../../gen/colors.gen.dart';
 import '../../../utils/extensions/text_style_ex.dart';
 import '../../theme/typography/typography.dart';
-import '../../widgets/dialogs/ok_cancel_dialog.dart';
 import '../../widgets/dialogs/ok_dialog.dart';
 
 const _kHorizontalPadding = EdgeInsets.symmetric(horizontal: 16);
@@ -90,6 +89,7 @@ class QuestionAddingPage extends ConsumerWidget {
                         style: customTextTheme.caption2.w6,
                       ),
                       const SizedBox(height: 8),
+                      // ignore: lines_longer_than_80_chars
                       Text(
                         '質問と回答をセットで登録してください。\n回答はいくつかの種類がある場合や、漢字、ひらがな、カタカナなどの表記揺れをカンマ区切りで複数登録することができます！',
                         style: customTextTheme.caption2,
