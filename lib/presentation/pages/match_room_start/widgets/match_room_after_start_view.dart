@@ -206,7 +206,9 @@ class _ListTile extends ConsumerWidget {
                   : null,
               content: userAnswer.userAnswer,
               crossAxisAlignment: CrossAxisAlignment.end,
-              chatBubbleDecoration: ChatBubbleDecoration.filledPrimary,
+              chatBubbleDecoration: userAnswer.isCorrect
+                  ? ChatBubbleDecoration.filledPrimary
+                  : ChatBubbleDecoration.filledGray,
             );
           }),
         ],
