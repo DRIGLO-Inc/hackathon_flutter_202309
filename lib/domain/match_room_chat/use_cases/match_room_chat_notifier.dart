@@ -13,6 +13,7 @@ import '../../user_answer/repositories/user_answer_repository.dart';
 import '../entities/match_room_chat.dart';
 import 'match_room_chat_answered_questions.dart';
 import 'match_room_chat_count.dart';
+import 'match_room_chat_is_end.dart';
 
 final matchRoomChatListNotifierProvider = AsyncNotifierProvider.autoDispose
     .family<MatchRoomChatListNotifier, List<MatchRoomChat>, String>(
@@ -142,6 +143,8 @@ class MatchRoomChatListNotifier
       ]);
 
       _listenTimer();
-    } else {}
+    } else {
+      ref.read(matchRoomChatIsEndNotifierProvider.notifier).state = true;
+    }
   }
 }

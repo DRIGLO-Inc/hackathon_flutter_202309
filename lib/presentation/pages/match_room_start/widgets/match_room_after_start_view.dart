@@ -1,14 +1,18 @@
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../domain/auth/use_cases/current_app_user/current_app_user_notifier.dart';
 import '../../../../domain/match_room_chat/entities/match_room_chat.dart';
 import '../../../../domain/match_room_chat/use_cases/match_room_chat_answered_questions.dart';
+import '../../../../domain/match_room_chat/use_cases/match_room_chat_is_end.dart';
 import '../../../../domain/match_room_chat/use_cases/match_room_chat_notifier.dart';
 import '../../../../domain/user_answer/use_cases/user_answer_save.dart';
 import '../../../../utils/extensions/build_context_ex.dart';
 import '../../../theme/color/custom_colors.dart';
+import '../../../widgets/dialogs/ok_cancel_dialog.dart';
 import '../../../widgets/unfocus_gesture_detector.dart';
+import '../../match_room_end/match_room_end.dart';
 import '../match_room_start_page.dart';
 import 'chat_answer_app_bar.dart';
 import 'chat_bubble.dart';
@@ -25,6 +29,7 @@ class MatchRoomAfterStartView extends ConsumerStatefulWidget {
 class _MatchRoomAfterStartViewState
     extends ConsumerState<MatchRoomAfterStartView> {
   final _chatController = TextEditingController();
+  final _asyncCache = AsyncCache<void>.ephemeral();
 
   void _send(String value) {
     if (value.isEmpty) {
@@ -45,6 +50,32 @@ class _MatchRoomAfterStartViewState
 
     context.unfocus();
     _chatController.clear();
+  }
+
+  @override
+  void initState() {
+    ref.listenManual(matchRoomChatIsEndNotifierProvider, (_, isEnd) {
+      if (isEnd) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _asyncCache.fetch(
+            () => OkCancelDialog.show(
+              context,
+              args: const OkCancelDialogArgs(
+                title: 'お疲れ様でした！',
+                content: '結果を見ますか？',
+                cancelLabel: 'キャンセル',
+                okLabel: '見る',
+              ),
+            ).then((value) {
+              if (value == true && context.mounted) {
+                Navigator.of(context).push(MatchRoomEndPage.route());
+              }
+            }),
+          );
+        });
+      }
+    });
+    super.initState();
   }
 
   @override
