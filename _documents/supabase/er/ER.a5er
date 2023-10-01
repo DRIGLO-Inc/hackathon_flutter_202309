@@ -1,7 +1,7 @@
-﻿# A5:ER FORMAT:17
+﻿# A5:ER FORMAT:16
 # A5:ER ENCODING:UTF8
 # A5:ER Mk-1 Copyright © 2007 m.matsubara
-# A5:SQL Mk-2 Version 2.18.4 Copyright © 1997 - 2023 m.matsubara
+# A5:SQL Mk-2 Version 2.17.4 Copyright © 1997 - 2022 m.matsubara
 #  https://a5m2.mmatsubara.com
 
 [Manager]
@@ -27,7 +27,7 @@ FooterLeft=
 FooterCenter=
 FooterRight=
 ShowPageoutRelation=1
-RDBMSType=7
+RDBMSType=6
 RDBMSTypeName=PostgreSQL
 DefaultPkName=%0:s_PKC
 DefaultPkIndexName=%0:s_PKI
@@ -86,11 +86,10 @@ Left=600
 Top=200
 Field="ユーザID","user_id","uuid","NOT NULL",0,"","",$FFFFFFFF,""
 Field="ユーザ名","user_name","text","NOT NULL",,"","",$FFFFFFFF,""
-Field="アイコン","user_icon","text","NOT NULL",,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20230930161026
+ModifiedDateTime=20230930171452
 Position="MAIN",600,200
 ZOrder=5
 
@@ -120,12 +119,13 @@ Page=MAIN
 Left=1950
 Top=200
 Field="部屋ID","match_room_id","uuid","NOT NULL",0,"","",$FFFFFFFF,""
+Field="オーナID","owner_id","uuid","NOT NULL",,"","",$FFFFFFFF,""
 Field="招待ID","invitation_id","text","NOT NULL",,"","",$FFFFFFFF,""
 Field="開始したか","is_start","boolean","NOT NULL",,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20230930163222
+ModifiedDateTime=20230930182226
 Position="MAIN",1950,200
 ZOrder=17
 
@@ -167,7 +167,7 @@ ZOrder=20
 
 [Entity]
 PName=user_answers
-LName=解答
+LName=ユーザ解答
 Comment=
 TableOption=
 Page=MAIN
@@ -185,7 +185,7 @@ Field="解答日時","answerd_at","timestamp with time zone","NOT NULL",,"","",$
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20230930162240
+ModifiedDateTime=20230930172317
 Position="MAIN",1200,800
 ZOrder=21
 
@@ -198,7 +198,7 @@ Fields1=user_id
 Fields2=user_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,4727,8793,6404,R,R,""
+Position="MAIN",0,4727,8793,4803,R,R,""
 Dependence=0
 Caption=
 PName=
@@ -206,7 +206,7 @@ ModifiedDateTime=20230930152424
 LineMode=0
 Bar1=473
 Bar2=879
-Bar3=640
+Bar3=480
 TermPos1=R
 TermPos2=R
 ZOrder=22
@@ -220,15 +220,15 @@ Fields1=match_room_id
 Fields2=match_room_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,3207,9150,4887,R,R,""
+Position="MAIN",0,4493,9150,6847,R,R,""
 Dependence=1
 Caption=
 PName=
 ModifiedDateTime=20230930152635
 LineMode=0
-Bar1=321
+Bar1=449
 Bar2=915
-Bar3=489
+Bar3=685
 TermPos1=R
 TermPos2=R
 ZOrder=23
@@ -263,7 +263,7 @@ Fields1=user_id
 Fields2=user_Id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,4754,8365,3926,R,R,""
+Position="MAIN",0,4754,8365,4030,R,R,""
 Dependence=0
 Caption=
 PName=
@@ -271,7 +271,7 @@ ModifiedDateTime=20230930152800
 LineMode=0
 Bar1=475
 Bar2=836
-Bar3=393
+Bar3=403
 TermPos1=R
 TermPos2=R
 ZOrder=25
@@ -306,7 +306,7 @@ Fields1=qustion_id
 Fields2=question_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,1994,8006,2493,R,R,""
+Position="MAIN",0,1994,8006,2492,R,R,""
 Dependence=0
 Caption=
 PName=
