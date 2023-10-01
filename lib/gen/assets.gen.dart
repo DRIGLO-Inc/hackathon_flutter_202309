@@ -33,6 +33,10 @@ class $AssetsImagesPngGen {
   AssetGenImage get questionAddingHeader =>
       const AssetGenImage('assets/images/png/question_adding_header.png');
 
+  /// File path: assets/images/png/result_header_image.png
+  AssetGenImage get resultHeaderImage =>
+      const AssetGenImage('assets/images/png/result_header_image.png');
+
   /// File path: assets/images/png/sign_in_image.png
   AssetGenImage get signInImage =>
       const AssetGenImage('assets/images/png/sign_in_image.png');
@@ -46,6 +50,7 @@ class $AssetsImagesPngGen {
         mainHeaderImage,
         mainImage,
         questionAddingHeader,
+        resultHeaderImage,
         signInImage,
         splashLogo
       ];
