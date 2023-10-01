@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../auth/use_cases/current_app_user/current_app_user_notifier.dart';
 import '../../genre/entities/genre.dart';
 import '../../match_room_question/entities/match_room_question.dart';
 import '../../question/entities/question.dart';
@@ -57,6 +58,34 @@ class MatchRoomChatListNotifier
     return [_fetchedList.first];
   }
 
+  void setOwnUserAnswer(String answer) {
+    _setUserAnswer(
+      UserAnswer(
+        userAnswerId: 'userAnswerId',
+        matchRoomQuestion: state.asData!.value.last.matchRoomQuestion,
+        answer: answer,
+        user: UserData(
+          userId: ref.read(currentAppUserNotifierProvider).getUserId(),
+          userName: 'あなた',
+        ),
+        isCorrect: Random().nextBool(),
+      ),
+    );
+  }
+
+  void _setUserAnswer(UserAnswer data) {
+    state = state.whenData(
+      (value) => [
+        for (final e in value)
+          if (e.matchRoomQuestion.matchRoomQuestionId ==
+              data.matchRoomQuestion.matchRoomQuestionId)
+            e.copyWith(userAnswerList: [...e.userAnswerList, data])
+          else
+            e,
+      ],
+    );
+  }
+
   Timer? _timer;
 
   void _listenTimer() {
@@ -93,18 +122,7 @@ class MatchRoomChatListNotifier
           isCorrect: Random().nextBool(),
         ),
       ),
-    ).listen((event) {
-      state = state.whenData(
-        (value) => [
-          for (final e in value)
-            if (e.matchRoomQuestion.matchRoomQuestionId ==
-                matchRoomQuestion.matchRoomQuestionId)
-              e.copyWith(userAnswerList: [...e.userAnswerList, event])
-            else
-              e,
-        ],
-      );
-    });
+    ).listen(_setUserAnswer);
   }
 
   void _setNextQuestionIfExist() {

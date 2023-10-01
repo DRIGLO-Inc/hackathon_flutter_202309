@@ -28,7 +28,9 @@ class _MatchRoomAfterStartViewState
     if (value.isEmpty) {
       return;
     }
-
+    ref
+        .read(matchRoomChatListNotifierProvider.notifier)
+        .setOwnUserAnswer(value);
     ref.read(userAnswerSaveProvider)(value);
 
     context.unfocus();
@@ -103,6 +105,11 @@ class _MatchRoomAfterStartViewState
                       onPressed: () {
                         _send(_chatController.text);
                       },
+                      style: FilledButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                        ),
+                      ),
                       child: const Icon(Icons.send),
                     ),
                   ),

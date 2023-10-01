@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../domain/match_room/use_cases/match_room_create.dart';
 import '../../../../utils/extensions/text_style_ex.dart';
 import '../../../theme/color/custom_colors.dart';
 import '../../../theme/typography/typography.dart';
-import '../../match_room_create/match_room_create_page.dart';
+import '../../match_room_start/match_room_start_page.dart';
 
 class SliverMatchRoomCreateCard extends ConsumerWidget {
   const SliverMatchRoomCreateCard({super.key});
@@ -59,10 +59,18 @@ class SliverMatchRoomCreateCard extends ConsumerWidget {
                       backgroundColor: CustomColors.grayShade0,
                       foregroundColor: CustomColors.grayShade1000,
                     ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MatchRoomCreatePage.route(),
-                      );
+                    onPressed: () async {
+                      final matchRoom =
+                          await ref.read(matchRoomCreateProvider)();
+                      if (context.mounted) {
+                        await Navigator.of(context).push(
+                          MatchRoomStartPage.route(
+                            MatchRoomStartPageArgs(
+                              matchRoom: matchRoom,
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../domain/match_room/entities/match_room.dart';
 import '../../../domain/match_room/use_cases/match_room_watch_is_start.dart';
 import '../../widgets/dialogs/ok_cancel_dialog.dart';
 import 'widgets/match_room_after_start_view.dart';
 import 'widgets/match_room_before_start_view.dart';
 
 class MatchRoomStartPageArgs {
-  MatchRoomStartPageArgs({required this.matchRoomId});
+  MatchRoomStartPageArgs({required this.matchRoom});
 
-  final String matchRoomId;
+  final MatchRoom matchRoom;
 }
 
 class MatchRoomStartPage extends ConsumerWidget {
