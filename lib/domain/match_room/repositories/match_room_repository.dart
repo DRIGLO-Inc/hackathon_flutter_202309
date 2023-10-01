@@ -36,6 +36,18 @@ class MatchRoomRepository {
             ),
       );
 
+  Stream<List<MatchRoom>> list() => _supabaseConfig.runSync(
+        (client) => client
+            .from(SupabaseTables.matchRooms)
+            .stream(primaryKey: ['match_room_id'])
+            .limit(10)
+            .asyncMap(
+              (event) {
+                return event.map(MatchRoom.fromJson).toList();
+              },
+            ),
+      );
+
   Future<void> start(String id) => _supabaseConfig.runSync(
         (client) => client.from(SupabaseTables.matchRooms).update({
           'is_start': true,

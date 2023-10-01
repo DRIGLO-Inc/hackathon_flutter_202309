@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../domain/match_room/entities/match_room.dart';
+import '../../../../domain/match_room/use_cases/match_room_list.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../utils/extensions/text_style_ex.dart';
 import '../../../theme/color/custom_colors.dart';
 import '../../../theme/typography/typography.dart';
+import '../../match_room_start/match_room_start_page.dart';
 
 const _kSelectRoomHeight = 216.0;
 const _kSelectRoomWidth = 240.0;
@@ -13,86 +14,96 @@ const _kSelectRoomWidth = 240.0;
 const mockUser = [1, 2, 3, 4];
 
 class SelectRoomCardList extends ConsumerWidget {
-  const SelectRoomCardList({super.key, required this.enableEnterRoomList});
-
-  final List<MatchRoom> enableEnterRoomList;
+  const SelectRoomCardList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final matchRoomListAsync = ref.watch(matchRoomListProvider);
+
     final borderRadius = BorderRadius.circular(20);
 
     return SizedBox(
       height: _kSelectRoomHeight,
-      // TODO(Tani1015): ルームがない時にテキストを表示する
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: enableEnterRoomList.length,
-        itemBuilder: (_, index) {
-          final enableMatchRoom = enableEnterRoomList[index];
+      child: matchRoomListAsync.when(
+        data: (matchRoomList) {
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: matchRoomList.length,
+            itemBuilder: (_, index) {
+              final cardMargin = EdgeInsets.only(
+                left: index == 0 ? 16 : 0,
+                right: 16,
+              );
 
-          final cardMargin = EdgeInsets.only(
-            left: index == 0 ? 16 : 0,
-            right: 16,
-          );
+              final matchRoom = matchRoomList[index];
 
-          return Container(
-            margin: cardMargin,
-            width: _kSelectRoomWidth,
-            child: Card(
-              color: CustomColors.secondaryBlue,
-              surfaceTintColor: Colors.transparent,
-              margin: EdgeInsets.zero,
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                borderRadius: borderRadius,
-              ),
-              child: InkWell(
-                borderRadius: borderRadius,
-                splashColor: CustomColors.accentBlue,
-                // TODO(Tani1015): ルームに入室
-                onTap: () {},
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 64,
-                            child: Text(
-                              enableMatchRoom.matchRoomId,
-                              style: customTextTheme.header5,
-                            ),
+              return Container(
+                margin: cardMargin,
+                width: _kSelectRoomWidth,
+                child: Card(
+                  color: CustomColors.secondaryBlue,
+                  surfaceTintColor: Colors.transparent,
+                  margin: EdgeInsets.zero,
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: borderRadius,
+                  ),
+                  child: InkWell(
+                    borderRadius: borderRadius,
+                    splashColor: CustomColors.accentBlue,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MatchRoomStartPage.route(
+                          MatchRoomStartPageArgs(
+                            matchRoom: matchRoom,
                           ),
-                          const SizedBox(height: 16),
-                          Text(
-                            '${enableMatchRoom.invitationId.length}人が待機中',
-                            style: customTextTheme.body3.w6.copyWith(
-                              color: CustomColors.grayShade0,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                      );
+                    },
+                    child: Column(
                       children: [
-                        for (var userIndex = 0;
-                            userIndex <
-                                enableEnterRoomList[index].invitationId.length;
-                            userIndex++) ...[
-                          if (userIndex != 0) const SizedBox(width: 8),
-                          if (userIndex <= 4) Assets.images.svg.userIcon.svg(),
-                        ],
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 64,
+                                child: Text(
+                                  matchRoom.invitationId,
+                                  style: customTextTheme.header5,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                '⚪︎人が待機中',
+                                style: customTextTheme.body3.w6.copyWith(
+                                  color: CustomColors.grayShade0,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                            ],
+                          ),
+                        ),
+                        // TODO(Tani1015): 人数分表示する
+                        Row(
+                          children: [
+                            for (final userIndex in mockUser) ...[
+                              if (userIndex != 0) const SizedBox(width: 8),
+                              if (userIndex <= 4)
+                                Assets.images.svg.userIcon.svg(),
+                            ],
+                          ],
+                        ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           );
         },
+        error: (_, __) => const Center(child: Text('エラーが発生しました')),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
     );
   }

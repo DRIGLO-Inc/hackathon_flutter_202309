@@ -78,9 +78,7 @@ class _Body extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                SelectRoomCardList(
-                  enableEnterRoomList: mainNotifier.enableEnterMatchRooms,
-                ),
+                const SelectRoomCardList(),
                 const SizedBox(height: 32),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
