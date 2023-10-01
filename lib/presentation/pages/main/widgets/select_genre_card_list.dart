@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../domain/genre/entities/genre.dart';
 import '../../../../domain/main/entities/main_state.dart';
 import '../../../../domain/main/use_cases/main_notifier.dart';
 import '../../../../utils/extensions/text_style_ex.dart';

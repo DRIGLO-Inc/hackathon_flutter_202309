@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../auth/use_cases/current_app_user/current_app_user_notifier.dart';
 import '../../genre/entities/genre.dart';
 import '../../match_room/entities/match_room.dart';
 import '../entities/main_state.dart';

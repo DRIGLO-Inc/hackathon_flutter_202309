@@ -14,7 +14,6 @@ import '../../widgets/buttons/rounded_button.dart';
 import '../../widgets/forms/rounded_rectangle_text_from.dart';
 import '../../widgets/snack_bars/floating_snack_bar.dart';
 import '../../widgets/unfocus_gesture_detector.dart';
-import '../auth_sign_up/auth_sign_up_page.dart';
 import '../main/main_page.dart';
 
 class AuthSignInPageArgs extends Equatable {
