@@ -18,7 +18,7 @@ class QuestionRepository {
   FutureOr<List<Question>> fetchRandomQuestions() {
     return _supabase.run(
       (client) async {
-      return  client
+        return client
             .from(SupabaseTables.questions)
             .select<PostgrestList>('*,genre:genres(*)')
             .limit(10)
@@ -33,11 +33,13 @@ class QuestionRepository {
     return _supabase.run(
       (client) => client //
           .from(SupabaseTables.questions)
-          .select<PostgrestList>()
+          .select<PostgrestList>('*,genre:genres(*)')
           .eq('match_room_id', matchRoomId)
           .withConverter(
-            (rows) => [for (final row in rows) Question.fromJson(row)],
-          ),
+        (rows) {
+          return [for (final row in rows) Question.fromJson(row)];
+        },
+      ),
     );
   }
 

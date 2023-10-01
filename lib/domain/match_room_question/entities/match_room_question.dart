@@ -11,7 +11,7 @@ part 'match_room_question.g.dart';
 class MatchRoomQuestion with _$MatchRoomQuestion {
   const factory MatchRoomQuestion({
     required String matchRoomQuestionId,
-    required String roomId,
+    required String matchRoomId,
     required Question question,
     @JsonKey(name: 'order_num')
     required int order,

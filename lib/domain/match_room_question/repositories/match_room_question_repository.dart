@@ -19,7 +19,7 @@ class MatchRoomQuestionRepository {
     return _supabase.run(
       (client) => client
           .from(SupabaseTables.matchRoomQuestions)
-          .select<PostgrestList>('*,question:questions(*)')
+          .select<PostgrestList>('*,question:questions(*,genre:genres(*))')
           .eq('match_room_id', matchRoomId)
           .withConverter(
             (rows) => [
@@ -35,7 +35,13 @@ class MatchRoomQuestionRepository {
         await client //
             .from(SupabaseTables.matchRoomQuestions)
             .insert(
-              matchRoomQuestions.map((e) => e.toJson()).toList(),
+              matchRoomQuestions.map((e) {
+                final json = e.toJson();
+                // ignore: cascade_invocations
+                json.remove('question');
+
+                return {...json, 'question_id': e.question.questionId};
+              }).toList(),
             );
       },
     );

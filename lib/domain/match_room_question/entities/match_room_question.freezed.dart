@@ -21,7 +21,7 @@ MatchRoomQuestion _$MatchRoomQuestionFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MatchRoomQuestion {
   String get matchRoomQuestionId => throw _privateConstructorUsedError;
-  String get roomId => throw _privateConstructorUsedError;
+  String get matchRoomId => throw _privateConstructorUsedError;
   Question get question => throw _privateConstructorUsedError;
   @JsonKey(name: 'order_num')
   int get order => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $MatchRoomQuestionCopyWith<$Res> {
   @useResult
   $Res call(
       {String matchRoomQuestionId,
-      String roomId,
+      String matchRoomId,
       Question question,
       @JsonKey(name: 'order_num') int order});
 
@@ -61,7 +61,7 @@ class _$MatchRoomQuestionCopyWithImpl<$Res, $Val extends MatchRoomQuestion>
   @override
   $Res call({
     Object? matchRoomQuestionId = null,
-    Object? roomId = null,
+    Object? matchRoomId = null,
     Object? question = null,
     Object? order = null,
   }) {
@@ -70,9 +70,9 @@ class _$MatchRoomQuestionCopyWithImpl<$Res, $Val extends MatchRoomQuestion>
           ? _value.matchRoomQuestionId
           : matchRoomQuestionId // ignore: cast_nullable_to_non_nullable
               as String,
-      roomId: null == roomId
-          ? _value.roomId
-          : roomId // ignore: cast_nullable_to_non_nullable
+      matchRoomId: null == matchRoomId
+          ? _value.matchRoomId
+          : matchRoomId // ignore: cast_nullable_to_non_nullable
               as String,
       question: null == question
           ? _value.question
@@ -104,7 +104,7 @@ abstract class _$$_MatchRoomQuestionCopyWith<$Res>
   @useResult
   $Res call(
       {String matchRoomQuestionId,
-      String roomId,
+      String matchRoomId,
       Question question,
       @JsonKey(name: 'order_num') int order});
 
@@ -124,7 +124,7 @@ class __$$_MatchRoomQuestionCopyWithImpl<$Res>
   @override
   $Res call({
     Object? matchRoomQuestionId = null,
-    Object? roomId = null,
+    Object? matchRoomId = null,
     Object? question = null,
     Object? order = null,
   }) {
@@ -133,9 +133,9 @@ class __$$_MatchRoomQuestionCopyWithImpl<$Res>
           ? _value.matchRoomQuestionId
           : matchRoomQuestionId // ignore: cast_nullable_to_non_nullable
               as String,
-      roomId: null == roomId
-          ? _value.roomId
-          : roomId // ignore: cast_nullable_to_non_nullable
+      matchRoomId: null == matchRoomId
+          ? _value.matchRoomId
+          : matchRoomId // ignore: cast_nullable_to_non_nullable
               as String,
       question: null == question
           ? _value.question
@@ -154,7 +154,7 @@ class __$$_MatchRoomQuestionCopyWithImpl<$Res>
 class _$_MatchRoomQuestion extends _MatchRoomQuestion {
   const _$_MatchRoomQuestion(
       {required this.matchRoomQuestionId,
-      required this.roomId,
+      required this.matchRoomId,
       required this.question,
       @JsonKey(name: 'order_num') required this.order})
       : super._();
@@ -165,7 +165,7 @@ class _$_MatchRoomQuestion extends _MatchRoomQuestion {
   @override
   final String matchRoomQuestionId;
   @override
-  final String roomId;
+  final String matchRoomId;
   @override
   final Question question;
   @override
@@ -174,7 +174,7 @@ class _$_MatchRoomQuestion extends _MatchRoomQuestion {
 
   @override
   String toString() {
-    return 'MatchRoomQuestion(matchRoomQuestionId: $matchRoomQuestionId, roomId: $roomId, question: $question, order: $order)';
+    return 'MatchRoomQuestion(matchRoomQuestionId: $matchRoomQuestionId, matchRoomId: $matchRoomId, question: $question, order: $order)';
   }
 
   @override
@@ -184,7 +184,8 @@ class _$_MatchRoomQuestion extends _MatchRoomQuestion {
             other is _$_MatchRoomQuestion &&
             (identical(other.matchRoomQuestionId, matchRoomQuestionId) ||
                 other.matchRoomQuestionId == matchRoomQuestionId) &&
-            (identical(other.roomId, roomId) || other.roomId == roomId) &&
+            (identical(other.matchRoomId, matchRoomId) ||
+                other.matchRoomId == matchRoomId) &&
             (identical(other.question, question) ||
                 other.question == question) &&
             (identical(other.order, order) || other.order == order));
@@ -192,8 +193,8 @@ class _$_MatchRoomQuestion extends _MatchRoomQuestion {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, matchRoomQuestionId, roomId, question, order);
+  int get hashCode => Object.hash(
+      runtimeType, matchRoomQuestionId, matchRoomId, question, order);
 
   @JsonKey(ignore: true)
   @override
@@ -213,7 +214,7 @@ class _$_MatchRoomQuestion extends _MatchRoomQuestion {
 abstract class _MatchRoomQuestion extends MatchRoomQuestion {
   const factory _MatchRoomQuestion(
           {required final String matchRoomQuestionId,
-          required final String roomId,
+          required final String matchRoomId,
           required final Question question,
           @JsonKey(name: 'order_num') required final int order}) =
       _$_MatchRoomQuestion;
@@ -225,7 +226,7 @@ abstract class _MatchRoomQuestion extends MatchRoomQuestion {
   @override
   String get matchRoomQuestionId;
   @override
-  String get roomId;
+  String get matchRoomId;
   @override
   Question get question;
   @override

@@ -36,9 +36,9 @@ class MatchRoomCreate {
         for (final (i, question) in questions.indexed)
           MatchRoomQuestion(
             matchRoomQuestionId: const Uuid().v4(),
-            roomId: matchRoom.matchRoomId,
+            matchRoomId: matchRoom.matchRoomId,
             question: question,
-            order: i,
+            order: i + 1,
           ),
       ],
     );
