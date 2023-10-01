@@ -9,10 +9,10 @@ part of 'user_answer.dart';
 _$_UserAnswer _$$_UserAnswerFromJson(Map<String, dynamic> json) =>
     _$_UserAnswer(
       userAnswerId: json['user_answer_id'] as String,
-      matchRoomQuestion: MatchRoomQuestion.fromJson(
-          json['match_room_question'] as Map<String, dynamic>),
+      matchRoomQuestionId: json['match_room_question_id'] as String,
+      userAnswer: json['user_answer'] as String,
       answer: json['answer'] as String,
-      user: UserData.fromJson(json['user'] as Map<String, dynamic>),
+      userId: json['user_id'] as String,
       isCorrect: json['is_correct'] as bool,
       durationTakenToUserAnswer: _$JsonConverterFromJson<int, Duration>(
           json['duration_taken_to_user_answer'],
@@ -22,9 +22,10 @@ _$_UserAnswer _$$_UserAnswerFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_UserAnswerToJson(_$_UserAnswer instance) =>
     <String, dynamic>{
       'user_answer_id': instance.userAnswerId,
-      'match_room_question': instance.matchRoomQuestion,
+      'match_room_question_id': instance.matchRoomQuestionId,
+      'user_answer': instance.userAnswer,
       'answer': instance.answer,
-      'user': instance.user,
+      'user_id': instance.userId,
       'is_correct': instance.isCorrect,
       'duration_taken_to_user_answer': _$JsonConverterToJson<int, Duration>(
           instance.durationTakenToUserAnswer,

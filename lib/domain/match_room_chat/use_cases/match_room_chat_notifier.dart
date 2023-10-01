@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../auth/use_cases/current_app_user/current_app_user_notifier.dart';
 import '../../match_room/use_cases/match_room_watch_is_start.dart';
@@ -9,7 +10,6 @@ import '../../match_room_question/entities/match_room_question.dart';
 import '../../match_room_question/repositories/match_room_question_repository.dart';
 import '../../user_answer/entities/user_answer.dart';
 import '../../user_answer/repositories/user_answer_repository.dart';
-import '../../user_data/entities/user_data.dart';
 import '../entities/match_room_chat.dart';
 import 'match_room_chat_answered_questions.dart';
 import 'match_room_chat_count.dart';
@@ -52,13 +52,12 @@ class MatchRoomChatListNotifier
   void setOwnUserAnswer(String answer) {
     _setUserAnswer(
       UserAnswer(
-        userAnswerId: 'userAnswerId',
-        matchRoomQuestion: state.asData!.value.last.matchRoomQuestion,
-        answer: answer,
-        user: UserData(
-          userId: ref.read(currentAppUserNotifierProvider).getUserId(),
-          userName: 'あなた',
-        ),
+        userAnswerId: const Uuid().v4(),
+        userAnswer: answer,
+        matchRoomQuestionId:
+            state.asData!.value.last.matchRoomQuestion.matchRoomQuestionId,
+        answer: state.asData!.value.last.matchRoomQuestion.question.answer,
+        userId: ref.read(currentAppUserNotifierProvider).getUserId(),
         isCorrect: Random().nextBool(),
       ),
     );
@@ -69,8 +68,19 @@ class MatchRoomChatListNotifier
       (value) => [
         for (final e in value)
           if (e.matchRoomQuestion.matchRoomQuestionId ==
-              data.matchRoomQuestion.matchRoomQuestionId)
-            e.copyWith(userAnswerList: [...e.userAnswerList, data])
+              data.matchRoomQuestionId)
+            e.copyWith(
+              userAnswerList: [
+                ...e.userAnswerList,
+                data,
+              ].fold([], (previousValue, cur) {
+                if (previousValue.any((e) => e.userId == cur.userId)) {
+                  return previousValue;
+                } else {
+                  return [...previousValue, cur];
+                }
+              }),
+            )
           else
             e,
       ],

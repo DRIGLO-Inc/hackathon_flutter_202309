@@ -102,7 +102,6 @@ class _GenrePanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final genreListByGenre = ref.watch(genreListByGenreProvider);
 
     return Material(
       shape: RoundedRectangleBorder(
@@ -131,7 +130,7 @@ class _GenrePanel extends ConsumerWidget {
                 height: 20,
                 width: double.infinity,
                 child: Text(
-                  '登録問題： ?? 問',
+                  '登録問題： 10 問',
                   style: customTextTheme.caption3,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
