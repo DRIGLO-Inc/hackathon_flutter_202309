@@ -2,6 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../auth/use_cases/current_app_user/current_app_user_notifier.dart';
+import '../../match_room_question/entities/match_room_question.dart';
+import '../../match_room_question/repositories/match_room_question_repository.dart';
+import '../../question/repositories/question_repository.dart';
 import '../entities/match_room.dart';
 import '../repositories/match_room_repository.dart';
 
@@ -12,7 +15,7 @@ class MatchRoomCreate {
   final Ref _ref;
 
   Future<MatchRoom> call() async {
-    return _ref.read(matchRoomRepository).create(
+    final matchRoom = await _ref.read(matchRoomRepository).create(
           MatchRoom(
             matchRoomId: const Uuid().v4(),
             ownerId: _ref.read(currentAppUserNotifierProvider).getUserId(),
@@ -20,5 +23,26 @@ class MatchRoomCreate {
             isStart: false,
           ),
         );
+
+    final questions =
+        await _ref.read(questionRepository).fetchRandomQuestions();
+
+    if (questions.isEmpty) {
+      throw Exception('問題が存在しません');
+    }
+
+    await _ref.read(matchRoomQuestionRepository).save(
+      matchRoomQuestions: [
+        for (final (i, question) in questions.indexed)
+          MatchRoomQuestion(
+            matchRoomQuestionId: const Uuid().v4(),
+            roomId: matchRoom.matchRoomId,
+            question: question,
+            order: i,
+          ),
+      ],
+    );
+
+    return matchRoom;
   }
 }

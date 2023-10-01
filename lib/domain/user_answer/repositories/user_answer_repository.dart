@@ -31,7 +31,7 @@ class UserAnswerRepository {
     required String answer,
     required String userAnswer,
     required String matchRoomQuestionId,
-    required bool isCorrect
+    required bool isCorrect,
   }) async =>
       _supabaseConfig.runSync(
         (client) => client.from(SupabaseTables.userAnswers).insert({

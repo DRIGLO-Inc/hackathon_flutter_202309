@@ -13,6 +13,7 @@ class MatchRoomQuestion with _$MatchRoomQuestion {
     required String matchRoomQuestionId,
     required String roomId,
     required Question question,
+    @JsonKey(name: 'order_num')
     required int order,
   }) = _MatchRoomQuestion;
 

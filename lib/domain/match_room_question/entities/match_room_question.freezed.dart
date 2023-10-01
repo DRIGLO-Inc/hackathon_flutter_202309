@@ -23,6 +23,7 @@ mixin _$MatchRoomQuestion {
   String get matchRoomQuestionId => throw _privateConstructorUsedError;
   String get roomId => throw _privateConstructorUsedError;
   Question get question => throw _privateConstructorUsedError;
+  @JsonKey(name: 'order_num')
   int get order => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +42,7 @@ abstract class $MatchRoomQuestionCopyWith<$Res> {
       {String matchRoomQuestionId,
       String roomId,
       Question question,
-      int order});
+      @JsonKey(name: 'order_num') int order});
 
   $QuestionCopyWith<$Res> get question;
 }
@@ -105,7 +106,7 @@ abstract class _$$_MatchRoomQuestionCopyWith<$Res>
       {String matchRoomQuestionId,
       String roomId,
       Question question,
-      int order});
+      @JsonKey(name: 'order_num') int order});
 
   @override
   $QuestionCopyWith<$Res> get question;
@@ -155,7 +156,7 @@ class _$_MatchRoomQuestion extends _MatchRoomQuestion {
       {required this.matchRoomQuestionId,
       required this.roomId,
       required this.question,
-      required this.order})
+      @JsonKey(name: 'order_num') required this.order})
       : super._();
 
   factory _$_MatchRoomQuestion.fromJson(Map<String, dynamic> json) =>
@@ -168,6 +169,7 @@ class _$_MatchRoomQuestion extends _MatchRoomQuestion {
   @override
   final Question question;
   @override
+  @JsonKey(name: 'order_num')
   final int order;
 
   @override
@@ -210,10 +212,11 @@ class _$_MatchRoomQuestion extends _MatchRoomQuestion {
 
 abstract class _MatchRoomQuestion extends MatchRoomQuestion {
   const factory _MatchRoomQuestion(
-      {required final String matchRoomQuestionId,
-      required final String roomId,
-      required final Question question,
-      required final int order}) = _$_MatchRoomQuestion;
+          {required final String matchRoomQuestionId,
+          required final String roomId,
+          required final Question question,
+          @JsonKey(name: 'order_num') required final int order}) =
+      _$_MatchRoomQuestion;
   const _MatchRoomQuestion._() : super._();
 
   factory _MatchRoomQuestion.fromJson(Map<String, dynamic> json) =
@@ -226,6 +229,7 @@ abstract class _MatchRoomQuestion extends MatchRoomQuestion {
   @override
   Question get question;
   @override
+  @JsonKey(name: 'order_num')
   int get order;
   @override
   @JsonKey(ignore: true)

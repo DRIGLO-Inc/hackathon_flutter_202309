@@ -19,7 +19,7 @@ class MatchRoomQuestionRepository {
     return _supabase.run(
       (client) => client
           .from(SupabaseTables.matchRoomQuestions)
-          .select<PostgrestList>()
+          .select<PostgrestList>('*,question:questions(*)')
           .eq('match_room_id', matchRoomId)
           .withConverter(
             (rows) => [

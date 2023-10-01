@@ -15,13 +15,16 @@ class QuestionRepository {
   const QuestionRepository(this._supabase);
   final SupabaseConfig _supabase;
 
-  FutureOr<List<String>> fetchRandomIds() {
+  FutureOr<List<Question>> fetchRandomQuestions() {
     return _supabase.run(
       (client) async {
-        final temp = await client.rpc('get_random_questions');
-        // TODO: 結果の形式を確認後、調整して返す
-        print(temp);
-        return [];
+      return  client
+            .from(SupabaseTables.questions)
+            .select<PostgrestList>('*,genre:genres(*)')
+            .limit(10)
+            .withConverter(
+              (rows) => [for (final row in rows) Question.fromJson(row)],
+            );
       },
     );
   }

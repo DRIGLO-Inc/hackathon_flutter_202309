@@ -8,6 +8,7 @@ import '../../../../domain/user_answer/use_cases/user_answer_save.dart';
 import '../../../../utils/extensions/build_context_ex.dart';
 import '../../../theme/color/custom_colors.dart';
 import '../../../widgets/unfocus_gesture_detector.dart';
+import '../match_room_start_page.dart';
 import 'chat_answer_app_bar.dart';
 import 'chat_bubble.dart';
 import 'timer_counter.dart';
@@ -28,13 +29,15 @@ class _MatchRoomAfterStartViewState
     if (value.isEmpty) {
       return;
     }
+    final matchRoomId =
+        context.pageArgs<MatchRoomStartPageArgs>().matchRoom.matchRoomId;
     ref
-        .read(matchRoomChatListNotifierProvider.notifier)
+        .read(matchRoomChatListNotifierProvider(matchRoomId).notifier)
         .setOwnUserAnswer(value);
     ref.read(userAnswerSaveProvider)(
       value,
       matchRoomQuestion: ref
-          .read(matchRoomChatListNotifierProvider)
+          .read(matchRoomChatListNotifierProvider(matchRoomId))
           .asData!
           .value
           .last
@@ -134,7 +137,10 @@ class _MatchRoomAfterStartViewState
 class _Body extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final list = ref.watch(matchRoomChatListNotifierProvider).value ?? [];
+    final matchRoomId =
+        context.pageArgs<MatchRoomStartPageArgs>().matchRoom.matchRoomId;
+    final list =
+        ref.watch(matchRoomChatListNotifierProvider(matchRoomId)).value ?? [];
 
     return CustomScrollView(
       reverse: true,

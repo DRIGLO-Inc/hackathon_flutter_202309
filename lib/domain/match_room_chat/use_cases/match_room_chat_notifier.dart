@@ -4,9 +4,9 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/use_cases/current_app_user/current_app_user_notifier.dart';
-import '../../genre/entities/genre.dart';
+import '../../match_room/use_cases/match_room_watch_is_start.dart';
 import '../../match_room_question/entities/match_room_question.dart';
-import '../../question/entities/question.dart';
+import '../../match_room_question/repositories/match_room_question_repository.dart';
 import '../../user_answer/entities/user_answer.dart';
 import '../../user_answer/repositories/user_answer_repository.dart';
 import '../../user_data/entities/user_data.dart';
@@ -14,41 +14,31 @@ import '../entities/match_room_chat.dart';
 import 'match_room_chat_answered_questions.dart';
 import 'match_room_chat_count.dart';
 
-final matchRoomChatListNotifierProvider = AsyncNotifierProvider.autoDispose<
-    MatchRoomChatListNotifier, List<MatchRoomChat>>(
+final matchRoomChatListNotifierProvider = AsyncNotifierProvider.autoDispose
+    .family<MatchRoomChatListNotifier, List<MatchRoomChat>, String>(
   MatchRoomChatListNotifier.new,
 );
 
 class MatchRoomChatListNotifier
-    extends AutoDisposeAsyncNotifier<List<MatchRoomChat>> {
+    extends AutoDisposeFamilyAsyncNotifier<List<MatchRoomChat>, String> {
   List<MatchRoomChat> _fetchedList = [];
 
   @override
-  FutureOr<List<MatchRoomChat>> build() {
-    ref.onDispose(() {
-      _timer?.cancel();
-    });
+  FutureOr<List<MatchRoomChat>> build(String arg) async {
+    ref
+      ..watch(matchRoomIsStartProvider(arg))
+      ..onDispose(() {
+        _timer?.cancel();
+      });
 
     _listenTimer();
 
-    // TODO(tsuda): 取得したものをまとめる
-    _fetchedList = [
-      for (var i = 1; i < 5; i++)
-        MatchRoomChat(
-          matchRoomQuestion: MatchRoomQuestion(
-            matchRoomQuestionId: 'matchRoomQuestionId$i',
-            roomId: 'roomId$i',
-            question: Question(
-              questionId: 'questionId$i',
-              title: 'title$i',
-              answer: 'answer$i',
-              genre: const Genre(genreId: 'genreId', genreName: 'genreName'),
-            ),
-            order: i,
-          ),
-        ),
-    ];
+    final questions =
+        await ref.read(matchRoomQuestionRepository).fetchList(matchRoomId: arg);
 
+    _fetchedList = questions
+        .map((e) => MatchRoomChat(matchRoomQuestion: e, userAnswerList: []))
+        .toList();
     if (_fetchedList.isEmpty) {
       return [];
     }
@@ -104,7 +94,6 @@ class MatchRoomChatListNotifier
 
   StreamSubscription<List<UserAnswer>>? _streamSubscription;
 
-  // TODO(tsuda): ユーザーのアンサーを監視
   void _listenUserAnswer({required MatchRoomQuestion matchRoomQuestion}) {
     _streamSubscription?.cancel();
 
@@ -112,7 +101,6 @@ class MatchRoomChatListNotifier
         .read(userAnswerRepository)
         .watch(matchRoomQuestionId: matchRoomQuestion.matchRoomQuestionId)
         .listen((event) {
-          
       for (final userAnswer in event) {
         _setUserAnswer(userAnswer);
       }

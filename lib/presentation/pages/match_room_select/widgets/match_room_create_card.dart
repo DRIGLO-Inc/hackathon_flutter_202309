@@ -5,6 +5,7 @@ import '../../../../domain/match_room/use_cases/match_room_create.dart';
 import '../../../../utils/extensions/text_style_ex.dart';
 import '../../../theme/color/custom_colors.dart';
 import '../../../theme/typography/typography.dart';
+import '../../../widgets/snack_bars/floating_snack_bar.dart';
 import '../../match_room_start/match_room_start_page.dart';
 
 class SliverMatchRoomCreateCard extends ConsumerWidget {
@@ -60,16 +61,25 @@ class SliverMatchRoomCreateCard extends ConsumerWidget {
                       foregroundColor: CustomColors.grayShade1000,
                     ),
                     onPressed: () async {
-                      final matchRoom =
-                          await ref.read(matchRoomCreateProvider)();
-                      if (context.mounted) {
-                        await Navigator.of(context).push(
-                          MatchRoomStartPage.route(
-                            MatchRoomStartPageArgs(
-                              matchRoom: matchRoom,
+                      try {
+                        final matchRoom =
+                            await ref.read(matchRoomCreateProvider)();
+                        if (context.mounted) {
+                          await Navigator.of(context).push(
+                            MatchRoomStartPage.route(
+                              MatchRoomStartPageArgs(
+                                matchRoom: matchRoom,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        }
+                      } on Exception catch (e) {
+                        if (context.mounted) {
+                          FloatingSnackBar.showError(
+                            context,
+                            message: e.toString(),
+                          );
+                        }
                       }
                     },
                     child: Row(
