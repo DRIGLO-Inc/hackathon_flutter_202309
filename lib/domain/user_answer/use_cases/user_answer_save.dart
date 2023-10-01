@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../utils/logger.dart';
 import '../../auth/use_cases/current_app_user/current_app_user_notifier.dart';
 import '../../match_room_question/entities/match_room_question.dart';
 import '../repositories/user_answer_repository.dart';
@@ -16,9 +17,14 @@ class UserAnswerSave {
   }) async {
     final userId = _ref.read(currentAppUserNotifierProvider).getUserId();
 
+    final isCorrect = matchRoomQuestion.question.answer == text ||
+        matchRoomQuestion.question.answerTexts.contains(text);
+
+    logger.info('isCorrect: $isCorrect');
+
     await _ref.read(userAnswerRepository).save(
           title: matchRoomQuestion.question.title,
-          isCorrect: matchRoomQuestion.question.answerTexts.contains(text),
+          isCorrect: isCorrect,
           userId: userId,
           answer: matchRoomQuestion.question.answer,
           userAnswer: text,
