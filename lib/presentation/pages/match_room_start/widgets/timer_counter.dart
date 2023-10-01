@@ -20,7 +20,8 @@ class _TimerCounterState extends ConsumerState<TimerCounter> {
 
   @override
   Widget build(BuildContext context) {
-    final count = ref.watch(matchRoomCountProvider);
+    final count =
+        MatchRoomChatCount.maxCount - ref.watch(matchRoomCountProvider);
 
     ref.listen<int>(
       matchRoomCountProvider,
