@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/genre/entities/genre.dart';
 import '../../../domain/match_room/entities/match_room.dart';
@@ -24,7 +25,7 @@ class MatchRoomSelectPageArgs extends Equatable {
   List<Object?> get props => [enableEnterMatchRooms, selectedGenre];
 }
 
-class MatchRoomSelectPage extends StatelessWidget {
+class MatchRoomSelectPage extends ConsumerWidget {
   const MatchRoomSelectPage._();
 
   static const routeName = '/match_room_select';
@@ -37,7 +38,7 @@ class MatchRoomSelectPage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final args = context.pageArgs<MatchRoomSelectPageArgs>();
 
     return UnfocusGestureDetector(
