@@ -6,4 +6,6 @@ class SupabaseTables {
   static const matchRooms = 'match_rooms';
 
   static const matchRoomQuestions = 'match_room_questions';
+
+  static const questions = 'questions';
 }

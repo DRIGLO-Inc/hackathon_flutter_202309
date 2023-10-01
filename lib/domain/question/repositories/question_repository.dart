@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../infrastructure/supabase/supabase_config.dart';
+import '../../../infrastructure/supabase/supabase_tables.dart';
 import '../entities/question.dart';
 
 final questionRepository = riverpod.Provider.autoDispose(
@@ -25,6 +26,14 @@ class QuestionRepository {
               ],
             );
       },
+    );
+  }
+
+  FutureOr<void> save({required List<Question> questions}) {
+    return _supabase.run(
+      (client) => client //
+          .from(SupabaseTables.questions)
+          .insert(questions.map((e) => e.toJson()).toList()),
     );
   }
 }
