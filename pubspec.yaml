@@ -47,10 +47,6 @@ dependencies:
   # Logger
   logger: ^2.0.2
 
-  # タイムゾーン
-  timezone: ^0.9.2
-  flutter_native_timezone: ^2.0.0
-
   # Local DB
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1

@@ -1,7 +1,7 @@
-﻿# A5:ER FORMAT:16
+﻿# A5:ER FORMAT:17
 # A5:ER ENCODING:UTF8
 # A5:ER Mk-1 Copyright © 2007 m.matsubara
-# A5:SQL Mk-2 Version 2.17.4 Copyright © 1997 - 2022 m.matsubara
+# A5:SQL Mk-2 Version 2.18.4 Copyright © 1997 - 2023 m.matsubara
 #  https://a5m2.mmatsubara.com
 
 [Manager]
@@ -27,7 +27,7 @@ FooterLeft=
 FooterCenter=
 FooterRight=
 ShowPageoutRelation=1
-RDBMSType=6
+RDBMSType=7
 RDBMSTypeName=PostgreSQL
 DefaultPkName=%0:s_PKC
 DefaultPkIndexName=%0:s_PKI
@@ -152,8 +152,8 @@ LName=出題
 Comment=
 TableOption=
 Page=MAIN
-Left=2300
-Top=600
+Left=2200
+Top=700
 Field="出題ID","match_room_question_id","uuid","NOT NULL",0,"","",$FFFFFFFF,""
 Field="部屋ID","match_room_id","uuid","NOT NULL",,"","",$FFFFFFFF,""
 Field="問題ID","question_id","uuid","NOT NULL",,"","",$FFFFFFFF,""
@@ -162,7 +162,7 @@ EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20230930162412
-Position="MAIN",2300,600
+Position="MAIN",2200,700
 ZOrder=20
 
 [Entity]
@@ -242,13 +242,13 @@ Fields1=match_room_id
 Fields2=match_room_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,8945,5209,2133,R,R,""
+Position="MAIN",0,10000,9336,2133,R,R,""
 Dependence=0
 Caption=
 PName=
 LineMode=0
-Bar1=894
-Bar2=521
+Bar1=1000
+Bar2=934
 Bar3=213
 TermPos1=R
 TermPos2=R
@@ -306,7 +306,7 @@ Fields1=qustion_id
 Fields2=question_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,1994,8006,2492,R,R,""
+Position="MAIN",0,1994,8006,2493,R,R,""
 Dependence=0
 Caption=
 PName=
