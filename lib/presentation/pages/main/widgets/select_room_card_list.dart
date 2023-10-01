@@ -25,7 +25,8 @@ class SelectRoomCardList extends ConsumerWidget {
     return SizedBox(
       height: _kSelectRoomHeight,
       child: matchRoomListAsync.when(
-        data: (matchRoomList) {
+        data: (beforeReversedMatchRoomList) {
+          final matchRoomList = beforeReversedMatchRoomList.reversed.toList();
           return ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: matchRoomList.length,
