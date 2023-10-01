@@ -31,7 +31,15 @@ class _MatchRoomAfterStartViewState
     ref
         .read(matchRoomChatListNotifierProvider.notifier)
         .setOwnUserAnswer(value);
-    ref.read(userAnswerSaveProvider)(value);
+    ref.read(userAnswerSaveProvider)(
+      value,
+      matchRoomQuestion: ref
+          .read(matchRoomChatListNotifierProvider)
+          .asData!
+          .value
+          .last
+          .matchRoomQuestion,
+    );
 
     context.unfocus();
     _chatController.clear();

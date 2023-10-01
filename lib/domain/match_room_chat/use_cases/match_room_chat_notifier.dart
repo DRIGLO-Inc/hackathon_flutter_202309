@@ -8,6 +8,7 @@ import '../../genre/entities/genre.dart';
 import '../../match_room_question/entities/match_room_question.dart';
 import '../../question/entities/question.dart';
 import '../../user_answer/entities/user_answer.dart';
+import '../../user_answer/repositories/user_answer_repository.dart';
 import '../../user_data/entities/user_data.dart';
 import '../entities/match_room_chat.dart';
 import 'match_room_chat_answered_questions.dart';
@@ -101,28 +102,21 @@ class MatchRoomChatListNotifier
     });
   }
 
-  StreamSubscription<UserAnswer>? _streamSubscription;
+  StreamSubscription<List<UserAnswer>>? _streamSubscription;
 
   // TODO(tsuda): ユーザーのアンサーを監視
   void _listenUserAnswer({required MatchRoomQuestion matchRoomQuestion}) {
     _streamSubscription?.cancel();
 
-    _streamSubscription = Stream.fromFuture(
-      Future.delayed(
-        const Duration(seconds: 1),
-        () => UserAnswer(
-          userAnswerId: 'userAnswerId',
-          matchRoomQuestion: matchRoomQuestion,
-          answer: 'answer',
-          user: UserData(
-            userId: '',
-            userName:
-                '太郎${matchRoomQuestion.matchRoomQuestionId.split('').last}',
-          ),
-          isCorrect: Random().nextBool(),
-        ),
-      ),
-    ).listen(_setUserAnswer);
+    _streamSubscription = ref
+        .read(userAnswerRepository)
+        .watch(matchRoomQuestionId: matchRoomQuestion.matchRoomQuestionId)
+        .listen((event) {
+          
+      for (final userAnswer in event) {
+        _setUserAnswer(userAnswer);
+      }
+    });
   }
 
   void _setNextQuestionIfExist() {
