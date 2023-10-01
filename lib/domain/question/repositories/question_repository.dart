@@ -23,7 +23,7 @@ class QuestionRepository {
         return client
             .from(SupabaseTables.questions)
             .select<PostgrestList>('*,genre:genres(*)')
-            .limit(10)
+            .limit(1)
             .withConverter(
               (rows) => [for (final row in rows) Question.fromJson(row)],
             );

@@ -1,29 +1,42 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../domain/match_room_chat/use_cases/match_room_result_provider.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../utils/extensions/text_style_ex.dart';
 import '../../theme/color/custom_colors.dart';
 import '../../theme/typography/typography.dart';
 import '../../widgets/buttons/rounded_button.dart';
 
+class MatchRoomEndPageArgs extends Equatable {
+  const MatchRoomEndPageArgs({required this.matchRoomId});
+
+  final String matchRoomId;
+
+  @override
+  List<Object?> get props => [matchRoomId];
+}
+
 class MatchRoomEndPage extends ConsumerWidget {
-  const MatchRoomEndPage._();
+  const MatchRoomEndPage._(this.args);
+  final MatchRoomEndPageArgs args;
 
   static const routeName = '/match_room_end';
 
-  static Route<void> route() {
+  static Route<void> route(MatchRoomEndPageArgs args) {
     return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
-      builder: (_) => const MatchRoomEndPage._(),
+      settings: RouteSettings(name: routeName, arguments: args),
+      builder: (_) => MatchRoomEndPage._(args),
     );
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final result = ref.watch(matchRoomResultProvider(args.matchRoomId));
     const username = 'ユーザ名'; // TODO
-    const correct = 6; // TODO
-    const total = 10; // TODO
+    final correct = result.result;
+    final total = result.total;
 
     return Scaffold(
       appBar: AppBar(

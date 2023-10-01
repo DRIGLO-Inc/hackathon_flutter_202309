@@ -41,6 +41,7 @@ dependencies:
   intl: ^0.18.1
   pub_semver: ^2.1.4
   async: ^2.11.0
+  collection: ^1.17.2
 
   # Validator
   form_validator: ^2.1.1

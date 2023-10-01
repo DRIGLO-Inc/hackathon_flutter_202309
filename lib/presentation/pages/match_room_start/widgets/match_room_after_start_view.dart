@@ -68,7 +68,16 @@ class _MatchRoomAfterStartViewState
               ),
             ).then((value) {
               if (value == true && context.mounted) {
-                Navigator.of(context).push(MatchRoomEndPage.route());
+                Navigator.of(context).push(
+                  MatchRoomEndPage.route(
+                    MatchRoomEndPageArgs(
+                      matchRoomId: context
+                          .pageArgs<MatchRoomStartPageArgs>()
+                          .matchRoom
+                          .matchRoomId,
+                    ),
+                  ),
+                );
               }
             }),
           );
@@ -85,7 +94,7 @@ class _MatchRoomAfterStartViewState
         appBar: const ChatAnswerAppBar(
           child: Text(
             // TODO(Tani1025): ジャンル名を取得する。
-            'ジャンル名がここに入る長い場合はellipsisにする',
+            'IT',
             style: TextStyle(fontWeight: FontWeight.bold),
             overflow: TextOverflow.ellipsis,
           ),
