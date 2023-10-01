@@ -34,7 +34,8 @@ class MatchRoomEndPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final result = ref.watch(matchRoomResultProvider(args.matchRoomId));
-    const username = 'ユーザ名'; // TODO
+    // TODO(tsuda): ユーザー名の取得
+    const username = 'ユーザ名'; 
     final correct = result.result;
     final total = result.total;
 
