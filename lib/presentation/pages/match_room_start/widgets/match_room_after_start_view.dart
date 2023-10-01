@@ -192,7 +192,7 @@ class _ListTile extends ConsumerWidget {
           ),
           if (showAnswer)
             _Message(
-              content: matchRoomChat.matchRoomQuestion.question.answer,
+              content: '答え：${matchRoomChat.matchRoomQuestion.question.answer}',
               crossAxisAlignment: CrossAxisAlignment.start,
               chatBubbleDecoration: ChatBubbleDecoration.outlined,
             ),
