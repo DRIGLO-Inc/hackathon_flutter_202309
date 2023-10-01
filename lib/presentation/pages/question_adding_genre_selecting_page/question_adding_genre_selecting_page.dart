@@ -52,7 +52,12 @@ class QuestionAddingGenreSelectingPage extends ConsumerWidget {
           genreList.when(
             data: (data) {
               return SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
+                padding: EdgeInsets.fromLTRB(
+                  32,
+                  0,
+                  32,
+                  MediaQuery.paddingOf(context).bottom + 24,
+                ),
                 sliver: SliverGrid.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
