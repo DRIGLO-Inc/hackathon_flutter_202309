@@ -36,13 +36,14 @@ class MatchRoomEnterCardList extends ConsumerWidget {
             child: InkWell(
               borderRadius: borderRadius,
               splashColor: CustomColors.accentBlue,
-              //TODO(Tani1015): ルームに入室
+              // TODO(Tani1015): ルームに入室
               onTap: () {},
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     Text(
+                      // ignore: lines_longer_than_80_chars
                       '${enableEnterMatchRoom.invitationId.length}人が待機中！参加してみよう！',
                       style: customTextTheme.body3.w6.copyWith(
                         color: CustomColors.grayShade0,

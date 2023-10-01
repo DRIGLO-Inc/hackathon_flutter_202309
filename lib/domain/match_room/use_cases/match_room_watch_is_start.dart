@@ -6,7 +6,6 @@ final matchRoomIsStartProvider =
     StreamProvider.autoDispose.family<bool, String>(
   (ref, arg) => ref.read(matchRoomRepository).watch(arg).asyncMap(
     (event) {
-      print(event.isStart);
       return event.isStart;
     },
   ),

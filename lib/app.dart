@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'domain/auth/use_cases/initialize_app/initialize_app.dart';
 import 'domain/auth/use_cases/initialize_app/initialize_app_status.dart';
-import 'presentation/pages/auth_sign_in/auth_sign_in_page.dart';
 import 'presentation/pages/auth_sign_up/auth_sign_up_page.dart';
 import 'presentation/pages/main/main_page.dart';
 import 'presentation/providers/theme_switcher_notifier.dart';

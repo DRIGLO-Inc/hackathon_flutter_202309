@@ -45,7 +45,7 @@ class SelectGenreCardList extends ConsumerWidget {
             ),
             child: InkWell(
               borderRadius: borderRadius,
-              //TODO(Tani1015): ジャンル画面に遷移する
+              // TODO(Tani1015): ジャンル画面に遷移する
               onTap: () => Navigator.of(context).push(
                 MatchRoomSelectPage.route(
                   args: MatchRoomSelectPageArgs(
