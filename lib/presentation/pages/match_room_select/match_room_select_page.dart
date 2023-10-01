@@ -1,5 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../../domain/genre/entities/genre.dart';
+import '../../../domain/match_room/entities/match_room.dart';
+import '../../../utils/extensions/build_context_ex.dart';
 import '../../../utils/extensions/text_style_ex.dart';
 import '../../theme/typography/typography.dart';
 import '../../widgets/forms/search_text_field.dart';
@@ -7,24 +11,42 @@ import '../../widgets/unfocus_gesture_detector.dart';
 import 'widgets/match_room_create_card.dart';
 import 'widgets/match_room_enter_card_list.dart';
 
+class MatchRoomSelectPageArgs extends Equatable {
+  const MatchRoomSelectPageArgs({
+    required this.enableEnterMatchRooms,
+    required this.selectedGenre,
+  });
+
+  final List<MatchRoom> enableEnterMatchRooms;
+  final Genre selectedGenre;
+
+  @override
+  List<Object?> get props => [enableEnterMatchRooms, selectedGenre];
+}
+
 class MatchRoomSelectPage extends StatelessWidget {
   const MatchRoomSelectPage._();
 
   static const routeName = '/match_room_select';
 
-  static Route<void> route() {
+  static Route<void> route({required MatchRoomSelectPageArgs args}) {
     return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
+      settings: RouteSettings(name: routeName, arguments: args),
       builder: (_) => const MatchRoomSelectPage._(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final args = context.pageArgs<MatchRoomSelectPageArgs>();
+
     return UnfocusGestureDetector(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('ジャンル名', style: customTextTheme.body5.w6),
+          title: Text(
+            args.selectedGenre.genreName,
+            style: customTextTheme.body5.w6,
+          ),
         ),
         body: CustomScrollView(
           slivers: [
@@ -58,7 +80,9 @@ class MatchRoomSelectPage extends StatelessWidget {
                 16,
                 MediaQuery.paddingOf(context).bottom + 16,
               ),
-              sliver: const MatchRoomEnterCardList(),
+              sliver: MatchRoomEnterCardList(
+                enableEnterRoomList: args.enableEnterMatchRooms,
+              ),
             ),
           ],
         ),

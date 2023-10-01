@@ -16,10 +16,11 @@ import '../../widgets/buttons/rounded_button.dart';
 import '../../widgets/forms/rounded_rectangle_text_from.dart';
 import '../../widgets/snack_bars/floating_snack_bar.dart';
 import '../../widgets/unfocus_gesture_detector.dart';
+import '../auth_sign_in/auth_sign_in_page.dart';
 import '../main/main_page.dart';
 
 class AuthSignUpPageArgs extends Equatable {
-  const AuthSignUpPageArgs({required this.email, required this.password});
+  const AuthSignUpPageArgs({this.email, this.password});
 
   final String? email;
   final String? password;
@@ -29,7 +30,7 @@ class AuthSignUpPageArgs extends Equatable {
 }
 
 class AuthSignUpPage extends ConsumerStatefulWidget {
-  const AuthSignUpPage._(this.args);
+  const AuthSignUpPage(this.args, {super.key});
 
   final AuthSignUpPageArgs args;
 
@@ -38,7 +39,7 @@ class AuthSignUpPage extends ConsumerStatefulWidget {
   static Route<void> route(AuthSignUpPageArgs args) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (_) => AuthSignUpPage._(args),
+      builder: (_) => AuthSignUpPage(args),
     );
   }
 
@@ -164,7 +165,15 @@ class _AuthSignUpPageState extends ConsumerState<AuthSignUpPage> {
                                 style: customTextTheme.caption1.w6
                                     .copyWith(color: CustomColors.accentBlue),
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = Navigator.of(context).pop,
+                                  ..onTap = () => Navigator.of(context).push(
+                                        AuthSignInPage.route(
+                                          AuthSignInPageArgs(
+                                            email: _emailTextController.text,
+                                            password:
+                                                _passwordTextController.text,
+                                          ),
+                                        ),
+                                      ),
                                 mouseCursor: SystemMouseCursors.precise,
                               ),
                               TextSpan(

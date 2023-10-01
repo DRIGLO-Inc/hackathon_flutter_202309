@@ -5,7 +5,7 @@ import '../../../../domain/auth/use_cases/sign_out/sign_out.dart';
 import '../../../../infrastructure/package_info/package_info.dart';
 import '../../../../utils/extensions/navigator_state_ex.dart';
 import '../../../widgets/snack_bars/floating_snack_bar.dart';
-import '../../auth_sign_in/auth_sign_in_page.dart';
+import '../../auth_sign_up/auth_sign_up_page.dart';
 
 class MainPageDrawer extends ConsumerWidget {
   const MainPageDrawer({super.key});
@@ -22,7 +22,7 @@ class MainPageDrawer extends ConsumerWidget {
 
         if (context.mounted) {
           await Navigator.of(context).pushAndRemoveAll(
-            AuthSignInPage.route(const AuthSignInPageArgs()),
+            AuthSignUpPage.route(const AuthSignUpPageArgs()),
           );
         }
       } on Exception catch (_) {

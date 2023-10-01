@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'domain/auth/use_cases/initialize_app/initialize_app.dart';
 import 'domain/auth/use_cases/initialize_app/initialize_app_status.dart';
 import 'presentation/pages/auth_sign_in/auth_sign_in_page.dart';
+import 'presentation/pages/auth_sign_up/auth_sign_up_page.dart';
 import 'presentation/pages/main/main_page.dart';
 import 'presentation/providers/theme_switcher_notifier.dart';
 import 'presentation/theme/global_keys.dart';
@@ -19,7 +20,7 @@ class App extends ConsumerWidget {
     final themeMode = ref.watch(themeSwitcherNotifierProvider);
 
     final home = switch (initializeAppStatus) {
-      InitializeAppStatus.noAuth => const AuthSignInPage(AuthSignInPageArgs()),
+      InitializeAppStatus.noAuth => const AuthSignUpPage(AuthSignUpPageArgs()),
       InitializeAppStatus.completed => const MainPage(),
       _ => const Scaffold()
     };

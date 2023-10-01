@@ -18,7 +18,7 @@ import '../auth_sign_up/auth_sign_up_page.dart';
 import '../main/main_page.dart';
 
 class AuthSignInPageArgs extends Equatable {
-  const AuthSignInPageArgs({this.email, this.password});
+  const AuthSignInPageArgs({required this.email, required this.password});
 
   final String? email;
   final String? password;
@@ -28,7 +28,7 @@ class AuthSignInPageArgs extends Equatable {
 }
 
 class AuthSignInPage extends ConsumerStatefulWidget {
-  const AuthSignInPage(this.args, {super.key});
+  const AuthSignInPage._(this.args);
 
   final AuthSignInPageArgs args;
 
@@ -37,7 +37,7 @@ class AuthSignInPage extends ConsumerStatefulWidget {
   static Route<void> route(AuthSignInPageArgs args) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (_) => AuthSignInPage(args),
+      builder: (_) => AuthSignInPage._(args),
     );
   }
 
@@ -133,21 +133,6 @@ class _AuthSignInPageState extends ConsumerState<AuthSignInPage> {
                           onPressed: () {},
                           child: Text(
                             'パスワードを忘れた方はこちら',
-                            style: customTextTheme.caption1.w6
-                                .copyWith(color: CustomColors.grayShade1000),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.of(context).push(
-                            AuthSignUpPage.route(
-                              AuthSignUpPageArgs(
-                                email: _emailTextController.text,
-                                password: _passwordTextController.text,
-                              ),
-                            ),
-                          ),
-                          child: Text(
-                            'アカウント登録する方はこちら',
                             style: customTextTheme.caption1.w6
                                 .copyWith(color: CustomColors.grayShade1000),
                           ),

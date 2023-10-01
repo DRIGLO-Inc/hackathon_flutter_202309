@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../domain/main/entities/main_state.dart';
+import '../../../domain/main/use_cases/main_notifier.dart';
 import '../../../utils/extensions/text_style_ex.dart';
 import '../../theme/typography/typography.dart';
 import '../../widgets/forms/search_text_field.dart';
@@ -25,6 +27,31 @@ class MainPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mainNotifier = ref.watch(mainNotifierProvider);
+
+    return mainNotifier.when(
+      data: (mainState) => _Body(),
+      error: (_, __) => Scaffold(
+        appBar: AppBar(),
+        body: const Center(
+          child: Text('エラーが発生しました'),
+        ),
+      ),
+      loading: () => const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+  }
+}
+
+class _Body extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mainNotifier =
+        ref.watch(mainNotifierProvider).value ?? const MainState();
+
     return UnfocusGestureDetector(
       child: Scaffold(
         floatingActionButton: FloatingActionButton.large(
@@ -42,6 +69,7 @@ class MainPage extends ConsumerWidget {
             const SliverHeaderImage(),
             SliverList.list(
               children: [
+                const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
@@ -50,7 +78,9 @@ class MainPage extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                const SelectRoomCardList(),
+                SelectRoomCardList(
+                  enableEnterRoomList: mainNotifier.enableEnterMatchRooms,
+                ),
                 const SizedBox(height: 32),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -74,7 +104,9 @@ class MainPage extends ConsumerWidget {
                 24,
                 MediaQuery.paddingOf(context).bottom + 96,
               ),
-              sliver: const SelectGenreCardList(),
+              sliver: SelectGenreCardList(
+                mainState: mainNotifier,
+              ),
             ),
           ],
         ),

@@ -37,9 +37,18 @@ class $AssetsImagesPngGen {
   AssetGenImage get signInImage =>
       const AssetGenImage('assets/images/png/sign_in_image.png');
 
+  /// File path: assets/images/png/splash_logo.png
+  AssetGenImage get splashLogo =>
+      const AssetGenImage('assets/images/png/splash_logo.png');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [mainHeaderImage, mainImage, questionAddingHeader, signInImage];
+  List<AssetGenImage> get values => [
+        mainHeaderImage,
+        mainImage,
+        questionAddingHeader,
+        signInImage,
+        splashLogo
+      ];
 }
 
 class $AssetsImagesSvgGen {

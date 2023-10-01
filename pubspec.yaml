@@ -61,6 +61,9 @@ dependencies:
   # others
   flutter_keyboard_visibility: ^5.4.1
 
+  # splash screen
+  flutter_native_splash: ^2.3.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -97,3 +100,12 @@ flutter_gen:
   colors:
     inputs:
       - assets/color/colors.xml
+
+flutter_native_splash:
+  color: '#FFFFFF'
+  image: 'assets/images/png/splash_logo.png'
+  android: true
+  ios: true
+  android_12:
+    color: '#FFFFFF'
+    image: 'assets/images/png/splash_logo.png'
