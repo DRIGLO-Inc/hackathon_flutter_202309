@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../domain/main/entities/main_state.dart';
-import '../../../../domain/main/use_cases/main_notifier.dart';
+import '../../../../domain/question/use_cases/question_adding/question_adding_page_providers.dart';
 import '../../../../utils/extensions/text_style_ex.dart';
 import '../../../theme/color/custom_colors.dart';
 import '../../../theme/typography/typography.dart';
@@ -21,8 +21,10 @@ class SelectGenreCardList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final borderRadius = BorderRadius.circular(20);
 
+    final genreList = ref.watch(genreListProvider).value ?? [];
+
     return SliverGrid.builder(
-      itemCount: mainState.genres.length,
+      itemCount: genreList.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: _kSelectGenreCardSpacing,
@@ -30,7 +32,16 @@ class SelectGenreCardList extends ConsumerWidget {
         mainAxisExtent: _kSelectGenreCardHeight,
       ),
       itemBuilder: (_, index) {
-        final genre = mainState.genres[index];
+        final genre = genreList[index];
+
+        final fetchQuestionCount = ref.watch(fetchQuestionCounts(genre));
+
+        int mockCounts() {
+          if (fetchQuestionCount.value == 0) {
+            return 10;
+          }
+          return fetchQuestionCount.value ?? 10;
+        }
 
         return SizedBox(
           width: _kSelectGenreCardWidth,
@@ -67,7 +78,7 @@ class SelectGenreCardList extends ConsumerWidget {
                       ),
                     ),
                     Text(
-                      '登録問題 : ${mockQuestionGenreLength[index]}問',
+                      '登録問題 : ${mockCounts()}問',
                       style: customTextTheme.caption1,
                     ),
                   ],

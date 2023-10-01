@@ -5,6 +5,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../infrastructure/supabase/supabase_config.dart';
 import '../../../infrastructure/supabase/supabase_tables.dart';
+import '../../../utils/logger.dart';
+import '../../genre/entities/genre.dart';
 import '../entities/question.dart';
 
 final questionRepository = riverpod.Provider.autoDispose(
@@ -41,6 +43,27 @@ class QuestionRepository {
         },
       ),
     );
+  }
+
+  Future<int> questionCount({required Genre genre}) async {
+    return _supabase.run((client) {
+      final data = client
+          .from(SupabaseTables.questions)
+          .select<PostgrestListResponse>(
+            'question_id',
+            const FetchOptions(
+              count: CountOption.exact,
+            ),
+          )
+          .eq('genre_id', genre.genreId);
+
+      return data.then((value) {
+        logger
+          ..info('value: $value')
+          ..info('value.length: ${value.count}}');
+        return value.count ?? 10;
+      });
+    });
   }
 
   FutureOr<void> save({required List<Question> questions}) {

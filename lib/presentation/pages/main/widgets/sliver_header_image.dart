@@ -15,7 +15,7 @@ class SliverHeaderImage extends ConsumerWidget {
         maxHeight: 300,
         minHeight: 300,
         child: Assets.images.png.mainHeaderImage.image(
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.fitWidth,
         ),
       ),
     );
