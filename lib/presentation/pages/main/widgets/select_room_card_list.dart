@@ -52,6 +52,7 @@ class SelectRoomCardList extends ConsumerWidget {
                     borderRadius: borderRadius,
                     splashColor: CustomColors.accentBlue,
                     onTap: () {
+                      final matchRoom = matchRoomList[index];
                       Navigator.of(context).push(
                         MatchRoomStartPage.route(
                           MatchRoomStartPageArgs(
@@ -75,7 +76,7 @@ class SelectRoomCardList extends ConsumerWidget {
                               ),
                               const SizedBox(height: 16),
                               Text(
-                                '⚪︎人が待機中',
+                                '${matchRoom.invitationId.length}人が待機中',
                                 style: customTextTheme.body3.w6.copyWith(
                                   color: CustomColors.grayShade0,
                                 ),
@@ -84,12 +85,14 @@ class SelectRoomCardList extends ConsumerWidget {
                             ],
                           ),
                         ),
-                        // TODO(Tani1015): 人数分表示する
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            for (final userIndex in mockUser) ...[
+                            for (var userIndex = 0;
+                                userIndex < matchRoom.invitationId.length;
+                                userIndex++) ...[
                               if (userIndex != 0) const SizedBox(width: 8),
-                              if (userIndex <= 4)
+                              if (userIndex < 3)
                                 Assets.images.svg.userIcon.svg(),
                             ],
                           ],
