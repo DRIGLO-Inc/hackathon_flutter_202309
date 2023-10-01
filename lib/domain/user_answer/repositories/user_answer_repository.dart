@@ -41,7 +41,7 @@ class UserAnswerRepository {
           'user_answer': userAnswer,
           'duration_taken_to_answer': 20,
           'is_correct': isCorrect,
-          'answered_at': DateTime.now(),
+          'answered_at': DateTime.now().toUtc().toIso8601String(),
         }),
       );
 }
