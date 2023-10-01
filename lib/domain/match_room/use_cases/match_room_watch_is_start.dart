@@ -1,7 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final matchRoomIsStartProvider = StreamProvider.autoDispose<bool>(
-  (ref) =>
-      // TODO(tsuda): 開始中かどうかを監視
-      Stream.value(true),
+import '../repositories/match_room_repository.dart';
+
+final matchRoomIsStartProvider =
+    StreamProvider.autoDispose.family<bool, String>(
+  (ref, arg) => ref
+      .read(matchRoomRepository)
+      .watch(arg)
+      .asyncMap((event) => event.isStart),
 );

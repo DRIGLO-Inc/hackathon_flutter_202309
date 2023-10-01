@@ -29,7 +29,8 @@ class MatchRoomStartPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isStartAsync = ref.watch(matchRoomIsStartProvider);
+    final isStartAsync =
+        ref.watch(matchRoomIsStartProvider(args.matchRoom.matchRoomId));
 
     return isStartAsync.when(
       data: (isStart) {

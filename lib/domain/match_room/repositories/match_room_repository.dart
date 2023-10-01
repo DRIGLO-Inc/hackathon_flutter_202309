@@ -1,0 +1,34 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../infrastructure/supabase/supabase_config.dart';
+import '../../../infrastructure/supabase/supabase_tables.dart';
+import '../entities/match_room.dart';
+
+final matchRoomRepository = riverpod.Provider.autoDispose<MatchRoomRepository>(
+  (ref) => MatchRoomRepository(SupabaseConfig.instance),
+);
+
+class MatchRoomRepository {
+  MatchRoomRepository(this._supabaseConfig);
+
+  final SupabaseConfig _supabaseConfig;
+
+  Future<MatchRoom> create(MatchRoom data) async {
+    return _supabaseConfig.run(
+      (client) => client
+          .from(SupabaseTables.matchRooms)
+          .insert(data.toJson())
+          .select<PostgrestList>()
+          .then((value) => MatchRoom.fromJson(value.first)),
+    );
+  }
+
+  Stream<MatchRoom> watch(String id) => _supabaseConfig.runSync(
+        (client) => client
+            .from(SupabaseTables.matchRooms)
+            .stream(primaryKey: [id]).asyncMap(
+          (event) => MatchRoom.fromJson(event.first),
+        ),
+      );
+}
