@@ -40,7 +40,6 @@ class MatchRoomRepository {
         (client) => client
             .from(SupabaseTables.matchRooms)
             .stream(primaryKey: ['match_room_id'])
-            .limit(10)
             .asyncMap(
               (event) {
                 return event.map(MatchRoom.fromJson).toList();
