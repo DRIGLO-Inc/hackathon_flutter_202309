@@ -16,7 +16,7 @@ class UserDataRepository {
   final SupabaseConfig _supabase;
 
   FutureOr<UserData> fetch({required String userId}) {
-    return _supabase.run<UserData>(
+    return _supabase.run(
       (client) async {
         return await client
             .from(SupabaseTables.users)
