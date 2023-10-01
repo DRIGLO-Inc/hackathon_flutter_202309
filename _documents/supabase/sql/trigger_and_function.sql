@@ -2,7 +2,7 @@
 CREATE OR REPLACE FUNCTION initialization()
 RETURNS trigger
 LANGUAGE plpgsql
-SECURITY DEFINER
+SECURITY definer
 AS $$
 BEGIN
     -- ユーザデータを追加
@@ -22,7 +22,7 @@ FOR EACH ROW EXECUTE FUNCTION initialization();
 CREATE OR REPLACE FUNCTION get_random_question_ids()
 RETURNS text[]
 LANGUAGE plpgsql
-SECURITY DEFINER
+SECURITY definer
 AS $$
 DECLARE
     result text[];
@@ -34,6 +34,7 @@ BEGIN
     RETURN result;
 END;
 $$;
+
 -- 問題を更新したとき
 -- CREATE TRIGGER on_question_updated
 -- before update on questions
