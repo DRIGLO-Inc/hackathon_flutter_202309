@@ -22,7 +22,7 @@ class MatchRoomStartPage extends ConsumerWidget {
 
   static Route<void> route(MatchRoomStartPageArgs args) {
     return MaterialPageRoute(
-      settings: const RouteSettings(name: routeName),
+      settings: RouteSettings(name: routeName, arguments: args),
       builder: (_) => MatchRoomStartPage._(args),
     );
   }

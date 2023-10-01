@@ -16,7 +16,7 @@ class MatchRoomCreate {
           MatchRoom(
             matchRoomId: const Uuid().v4(),
             ownerId: _ref.read(currentAppUserNotifierProvider).getUserId(),
-            invitationId: 'invitationId',
+            invitationId: const Uuid().v1().split('-')[0],
             isStart: false,
           ),
         );
