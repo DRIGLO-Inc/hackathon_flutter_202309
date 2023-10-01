@@ -69,13 +69,17 @@ class MatchRoomChatListNotifier
         for (final e in value)
           if (e.matchRoomQuestion.matchRoomQuestionId ==
               data.matchRoomQuestionId)
-            // TODO(tsuda): 同じユーザーを排除
-            
             e.copyWith(
               userAnswerList: [
                 ...e.userAnswerList,
                 data,
-              ],
+              ].fold([], (previousValue, cur) {
+                if (previousValue.any((e) => e.userId == cur.userId)) {
+                  return previousValue;
+                } else {
+                  return [...previousValue, cur];
+                }
+              }),
             )
           else
             e,
