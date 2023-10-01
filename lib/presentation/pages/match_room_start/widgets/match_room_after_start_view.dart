@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../domain/auth/use_cases/current_app_user/current_app_user_notifier.dart';
 import '../../../../domain/match_room_chat/entities/match_room_chat.dart';
 import '../../../../domain/match_room_chat/use_cases/match_room_chat_answered_questions.dart';
 import '../../../../domain/match_room_chat/use_cases/match_room_chat_notifier.dart';
@@ -199,8 +200,11 @@ class _ListTile extends ConsumerWidget {
             ),
           ...matchRoomChat.userAnswerList.map((userAnswer) {
             return _Message(
-              name: userAnswer.user.userName,
-              content: userAnswer.answer,
+              name: userAnswer.userId ==
+                      ref.watch(currentAppUserNotifierProvider).getUserId()
+                  ? 'あなた'
+                  : null,
+              content: userAnswer.userAnswer,
               crossAxisAlignment: CrossAxisAlignment.end,
               chatBubbleDecoration: ChatBubbleDecoration.filledPrimary,
             );

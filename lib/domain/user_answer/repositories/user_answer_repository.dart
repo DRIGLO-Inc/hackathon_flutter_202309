@@ -29,6 +29,7 @@ class UserAnswerRepository {
   Future<void> save({
     required String userId,
     required String answer,
+    required String title,
     required String userAnswer,
     required String matchRoomQuestionId,
     required bool isCorrect,
@@ -38,6 +39,8 @@ class UserAnswerRepository {
           'user_answer_id': const Uuid().v4(),
           'match_room_question_id': matchRoomQuestionId,
           'user_id': userId,
+          'title': title,
+          'answer': answer,
           'user_answer': userAnswer,
           'duration_taken_to_answer': 20,
           'is_correct': isCorrect,

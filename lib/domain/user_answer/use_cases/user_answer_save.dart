@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/use_cases/current_app_user/current_app_user_notifier.dart';
 import '../../match_room_question/entities/match_room_question.dart';
-import '../entities/user_answer.dart';
 import '../repositories/user_answer_repository.dart';
 
 final userAnswerSaveProvider = Provider.autoDispose(UserAnswerSave.new);
@@ -18,6 +17,7 @@ class UserAnswerSave {
     final userId = _ref.read(currentAppUserNotifierProvider).getUserId();
 
     await _ref.read(userAnswerRepository).save(
+          title: matchRoomQuestion.question.title,
           isCorrect: matchRoomQuestion.question.answerTexts.contains(text),
           userId: userId,
           answer: matchRoomQuestion.question.answer,
