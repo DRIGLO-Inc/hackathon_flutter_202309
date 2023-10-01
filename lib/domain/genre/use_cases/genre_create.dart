@@ -8,5 +8,7 @@ class GenreCreate {
 
   Future<void> call() async {
     // TODO(tsuda): ジャンルの作成実装
+    // ignore: unnecessary_statements
+    _ref;
   }
 }

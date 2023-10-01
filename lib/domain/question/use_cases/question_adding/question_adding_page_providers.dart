@@ -16,7 +16,8 @@ final genreListByGenreProvider = FutureProvider.autoDispose<List<Genre>>((ref) {
 });
 
 final selectedGenreProvider = StateProvider.autoDispose<Genre>(
-    (ref) => const Genre(genreId: '', genreName: ''));
+  (ref) => const Genre(genreId: '', genreName: ''),
+);
 
 final editingQuestionUuidsNotifierProvider =
     NotifierProvider.autoDispose<EditingQuestionUuIdsNotifier, List<String>>(

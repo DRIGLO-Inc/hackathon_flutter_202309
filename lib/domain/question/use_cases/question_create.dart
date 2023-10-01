@@ -8,5 +8,7 @@ class QuestionCreate {
 
   Future<void> call() async {
     // TODO(tsuda): 問題の作成の実装
+    // ignore: unnecessary_statements
+    _ref;
   }
 }

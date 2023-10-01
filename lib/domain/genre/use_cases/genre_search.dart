@@ -8,5 +8,7 @@ class GenreSearch {
 
   Future<void> call() async {
     // TODO(tsuda): ジャンルの検索
+    // ignore: unnecessary_statements
+    _ref;
   }
 }
