@@ -8,7 +8,7 @@ import '../../genre/entities/genre.dart';
 import '../../match_room_question/entities/match_room_question.dart';
 import '../../question/entities/question.dart';
 import '../../user_answer/entities/user_answer.dart';
-import '../../user_data/user_data.dart';
+import '../../user_data/entities/user_data.dart';
 import '../entities/match_room_chat.dart';
 import 'match_room_chat_answered_questions.dart';
 import 'match_room_chat_count.dart';
