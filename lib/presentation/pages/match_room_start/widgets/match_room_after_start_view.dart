@@ -197,12 +197,20 @@ class _ListTile extends ConsumerWidget {
               chatBubbleDecoration: ChatBubbleDecoration.outlined,
             ),
           ...matchRoomChat.userAnswerList.map((userAnswer) {
+            final ownUserId =
+                ref.watch(currentAppUserNotifierProvider).getUserId();
+
+            final hideContent =
+                ownUserId != userAnswer.userId && userAnswer.isCorrect;
+
             return _Message(
               name: userAnswer.userId ==
                       ref.watch(currentAppUserNotifierProvider).getUserId()
                   ? 'あなた'
-                  : null,
-              content: userAnswer.userAnswer,
+                  : '他ユーザー',
+              content: hideContent
+                  ? '''ｱﾀｯﾀ!! ＼( 'ω')／ ｱﾀｯﾀ!!'''
+                  : userAnswer.userAnswer,
               crossAxisAlignment: CrossAxisAlignment.end,
               chatBubbleDecoration: userAnswer.isCorrect
                   ? ChatBubbleDecoration.filledPrimary
