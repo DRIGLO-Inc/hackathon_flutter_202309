@@ -32,9 +32,7 @@ class _MatchRoomAfterStartViewState
     }
     final matchRoomId =
         context.pageArgs<MatchRoomStartPageArgs>().matchRoom.matchRoomId;
-    ref
-        .read(matchRoomChatListNotifierProvider(matchRoomId).notifier)
-        .setOwnUserAnswer(value);
+
     ref.read(userAnswerSaveProvider)(
       value,
       matchRoomQuestion: ref
