@@ -15,17 +15,26 @@ class QuestionRepository {
   const QuestionRepository(this._supabase);
   final SupabaseConfig _supabase;
 
-  FutureOr<List<Question>> fetchList({required String userId}) {
+  FutureOr<List<String>> fetchRandomIds() {
     return _supabase.run(
       (client) async {
-        return await client.rpc('get_random_questions').withConverter(
-              (rows) => [
-                for (final row
-                    in List<PostgrestMap>.from(rows as List<dynamic>))
-                  Question.fromJson(row),
-              ],
-            );
+        final temp = await client.rpc('get_random_questions');
+        // TODO: 結果の形式を確認後、調整して返す
+        print(temp);
+        return [];
       },
+    );
+  }
+
+  FutureOr<List<Question>> fetchList({required String matchRoomId}) {
+    return _supabase.run(
+      (client) => client //
+          .from(SupabaseTables.questions)
+          .select<PostgrestList>()
+          .eq('match_room_id', matchRoomId)
+          .withConverter(
+            (rows) => [for (final row in rows) Question.fromJson(row)],
+          ),
     );
   }
 

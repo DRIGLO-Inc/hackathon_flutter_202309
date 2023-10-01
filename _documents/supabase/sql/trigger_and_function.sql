@@ -1,5 +1,5 @@
 ﻿-- 初期設定
-CREATE FUNCTION initialization()
+CREATE OR REPLACE FUNCTION initialization()
 RETURNS trigger
 LANGUAGE plpgsql
 SECURITY DEFINER
@@ -19,20 +19,21 @@ AFTER INSERT ON auth.users
 FOR EACH ROW EXECUTE FUNCTION initialization();
 
 -- ランダムに問題を10個取得
-CREATE FUNCTION get_random_questions()
-RETURNS SETOF questions
+CREATE OR REPLACE FUNCTION get_random_question_ids()
+RETURNS text[]
 LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
+DECLARE
+    result text[];
 BEGIN
-    RETURN QUERY
-    SELECT *
+    SELECT ARRAY_AGG(question_id) INTO result
     FROM questions
     ORDER BY random()
     LIMIT 10;
+    RETURN result;
 END;
 $$;
-
 -- 問題を更新したとき
 -- CREATE TRIGGER on_question_updated
 -- before update on questions
