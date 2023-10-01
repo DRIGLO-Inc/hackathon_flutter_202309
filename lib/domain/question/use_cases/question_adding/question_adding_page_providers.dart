@@ -2,18 +2,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../genre/entities/genre.dart';
-import '../../../question/entities/question.dart';
+import '../../../genre/use_cases/genre_fetch_all.dart';
+import '../../../genre/use_cases/genre_fetch_by_genre.dart';
+import '../../entities/question.dart';
 
-final genreListProvider = FutureProvider<List<Genre>>((ref) {
-  return [
-    const Genre(genreId: '', genreName: '基礎情報技術者試験'),
-    const Genre(genreId: '', genreName: '公認会計士'),
-    const Genre(genreId: '', genreName: 'TOEIC450点単語テスト'),
-  ];
+final genreListProvider = FutureProvider.autoDispose<List<Genre>>((ref) {
+  return ref.read(genreFetchAllProvider)();
 });
 
-final selectedGenreProvider =
-    StateProvider<Genre>((ref) => const Genre(genreId: '', genreName: ''));
+final genreListByGenreProvider = FutureProvider.autoDispose<List<Genre>>((ref) {
+  final genre = ref.watch(selectedGenreProvider);
+  return ref.read(genreFetchByGenreProvider)(genre);
+});
+
+final selectedGenreProvider = StateProvider.autoDispose<Genre>(
+    (ref) => const Genre(genreId: '', genreName: ''));
 
 final editingQuestionUuidsNotifierProvider =
     NotifierProvider.autoDispose<EditingQuestionUuIdsNotifier, List<String>>(

@@ -10,4 +10,6 @@ class SupabaseTables {
   static const questions = 'questions';
 
   static const userAnswers = 'user_answers';
+
+  static const genres = 'genres';
 }

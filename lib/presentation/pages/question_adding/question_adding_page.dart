@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/auth/use_cases/question_adding/question_adding_page_providers.dart';
+import '../../../domain/question/use_cases/question_adding/question_adding_page_providers.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../utils/extensions/text_style_ex.dart';
 import '../../theme/typography/typography.dart';

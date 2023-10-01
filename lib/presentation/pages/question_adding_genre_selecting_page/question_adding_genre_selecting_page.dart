@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/auth/use_cases/question_adding/question_adding_page_providers.dart';
 import '../../../domain/genre/entities/genre.dart';
+import '../../../domain/question/use_cases/question_adding/question_adding_page_providers.dart';
+
 import '../../../gen/assets.gen.dart';
 import '../../../utils/extensions/text_style_ex.dart';
 import '../../theme/typography/typography.dart';
 import '../question_adding/question_adding_page.dart';
-
-// TODO(ogino): ダミーデータ
-const _kQuestionsCount = 8;
 
 class QuestionAddingGenreSelectingPage extends ConsumerWidget {
   const QuestionAddingGenreSelectingPage._();
@@ -77,7 +75,7 @@ class QuestionAddingGenreSelectingPage extends ConsumerWidget {
                 ),
               );
             },
-            error: (_, __) {
+            error: (e, __) {
               return const Center(
                 child: Text('データの取得に失敗しました。'),
               );
@@ -96,14 +94,16 @@ class QuestionAddingGenreSelectingPage extends ConsumerWidget {
   }
 }
 
-class _GenrePanel extends StatelessWidget {
+class _GenrePanel extends ConsumerWidget {
   const _GenrePanel({required this.genre, required this.onTap});
 
   final Genre genre;
   final ValueChanged<Genre> onTap;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final genreListByGenre = ref.watch(genreListByGenreProvider);
+
     return Material(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -131,7 +131,7 @@ class _GenrePanel extends StatelessWidget {
                 height: 20,
                 width: double.infinity,
                 child: Text(
-                  '登録問題：$_kQuestionsCount問',
+                  '登録問題： ?? 問',
                   style: customTextTheme.caption3,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
