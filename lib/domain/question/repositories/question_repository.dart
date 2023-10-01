@@ -20,12 +20,24 @@ class QuestionRepository {
   FutureOr<List<Question>> fetchRandomQuestions() {
     return _supabase.run(
       (client) async {
-        return client
+        return await client //
             .from(SupabaseTables.questions)
-            .select<PostgrestList>('*,genre:genres(*)')
-            .limit(1)
+            .select<PostgrestList>('''
+            *,
+            genre:genres(*),
+            answer_texts(answer_text)
+            ''')
+            .limit(10)
             .withConverter(
-              (rows) => [for (final row in rows) Question.fromJson(row)],
+              (rows) {
+                for (final row in rows) {
+                  final answerTexts = row['answer_texts'] as List<dynamic>;
+                  final temps =
+                      answerTexts.map((e) => e['answer_text']).toList();
+                  row['answer_texts'] = temps;
+                }
+                return [for (final row in rows) Question.fromJson(row)];
+              },
             );
       },
     );
